@@ -58,12 +58,12 @@ const log = {
   }
   
 const { say } = cfonts
-console.log(chalk.magentaBright('\n💙 Iniciando 01'))
-  say('Hatsune\nMiku', {
+console.log(chalk.magentaBright('\n🧡 Iniciando 01'))
+  say('Kitagawa\nBot', {
   align: 'center',           
   gradient: ['red', 'blue'] 
 })
-  say('Made by (ㅎㅊDEPOOLㅊㅎ)', {
+  say('Made by (CHASKI)', {
   font: 'console',
   align: 'center',
   gradient: ['blue', 'magenta']
@@ -178,7 +178,7 @@ async function startBot() {
     
     if (qr != 0 && qr != undefined || methodCodeQR) {
     if (opcion == '1' || methodCodeQR) {
-      console.log(chalk.green.bold("💙 Escanea este código QR"));
+      console.log(chalk.green.bold("🧡 Escanea este código QR"));
       qrcode.generate(qr, { small: true });
     }}
 
@@ -234,10 +234,10 @@ async function startBot() {
     if (connection == "open") {
          const userJid = jidNormalizedUser(client.user.id)
          const userName = client.user.name || "Desconocido"
-         console.log(chalk.green.bold(`💙 Conectado a: ${userName}`))
+         console.log(chalk.green.bold(`🧡 Conectado a: ${userName}`))
          try {
            initializeWelcome(client);
-           console.log(chalk.blue('💙 Welcome handler inicializado'));
+           console.log(chalk.blue('🧡 Welcome handler inicializado'));
          } catch (err) {
            console.log(chalk.red('Error inicializando Welcome:'), err.message);
          }
@@ -294,6 +294,6 @@ async function startBot() {
 
 (async () => {
     global.loadDatabase()
-    console.log(chalk.gray('💙 Base de datos cargada correctamente.'))
+    console.log(chalk.gray('🧡 Base de datos cargada correctamente.'))
   await startBot()
 })()
