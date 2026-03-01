@@ -162,7 +162,7 @@ const allowedInPrivateForUsers = ['report', 'reporte', 'sug', 'suggest', 'invite
 if (!isOwners && !allowedInPrivateForUsers.includes(command)) return
 }
 if (chat?.isBanned && !(command === 'bot' && text === 'on') && !global.owner.map(num => num + '@s.whatsapp.net').includes(sender)) {
-await m.reply(`💙 El bot *${settings.botname}* está desactivado en este grupo.\n\n> 🌱 Un *administrador* puede activarlo con el comando:\n> » *${usedPrefix}bot on*`)
+await m.reply(`🧡 El bot *${settings.botname}* está desactivado en este grupo.\n\n> 🏵️ Un *administrador* puede activarlo con el comando:\n> » *${usedPrefix}bot on*`)
 return
 }
 
@@ -198,7 +198,7 @@ user.name = m.pushName
 users.stats[today].cmds++
 await cmdData.run(client, m, args, usedPrefix, command, text)
 } catch (error) {
-await client.sendMessage(m.chat, { text: `💙 Error al ejecutar el comando\n${error}` }, { quoted: m })
+await client.sendMessage(m.chat, { text: `🧡 Error al ejecutar el comando\n${error}` }, { quoted: m })
 }
 level(m)
 }
