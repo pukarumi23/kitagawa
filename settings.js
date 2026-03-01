@@ -11,7 +11,7 @@ global.dev = "© 🄿🄾🅆🄴🅁🄴🄳 CHASKI"
 global.links = {
 api: 'https://rest.alyabotpe.xyz',
 channel: "https://whatsapp.com/channel/0029VbC04aQ6mYPDkbiMte0u",
-github: "https://github.com/pukarumi23/kasane_teto",
+github: "https://github.com/pukarumi23/kitagawa",
 gmail: "glitchgarden449@gmail.com"
 }
 
