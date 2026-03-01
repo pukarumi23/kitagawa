@@ -21,13 +21,13 @@ global.miku = {
     forwardedNewsletterMessageInfo: { 
       newsletterJid: "120363425300401364@newsletter", 
       serverMessageId: 100, 
-      newsletterName: "❤️KASANE_TETO❤️"
+      newsletterName: "🧡KITAGAWA🧡"
     },
     externalAdReply: {
       mediaUrl: null,
       description: '🌱Lo mejor🌿',
       previewType: "PHOTO",
-      thumbnailUrl: global.banner || 'https://i.pinimg.com/736x/99/a3/12/99a312efc31828bade4d45b820a4a308.jpg',
+      thumbnailUrl: global.banner || 'https://i.pinimg.com/736x/a6/bc/e0/a6bce0a408b2ec6037cabafc67afeadb.jpg',
       sourceUrl: global.channel || 'https://whatsapp.com/channel/0029VbC04aQ6mYPDkbiMte0u',
       mediaType: 1,
       renderLargerThumbnail: false
@@ -36,9 +36,9 @@ global.miku = {
 }
 
 global.mess = {
-socket: '🍁 Este comando solo puede ser ejecutado por un Socket.',
-admin: '🍁 Este comando solo puede ser ejecutado por los Administradores del Grupo.',
-botAdmin: '🍁 Este comando solo puede ser ejecutado si el Socket es Administrador del Grupo.'
+socket: '🏵️ Este comando solo puede ser ejecutado por un Socket.',
+admin: '🏵️ Este comando solo puede ser ejecutado por los Administradores del Grupo.',
+botAdmin: '🏵️ Este comando solo puede ser ejecutado si el Socket es Administrador del Grupo.'
 }
 
 global.APIs = {
