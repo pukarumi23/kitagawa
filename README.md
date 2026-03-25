@@ -108,9 +108,8 @@ Si deseas ejecutar el bot en Termux (Android), sigue estos pasos sencillos:
   
   ## 📊 Estadísticas del Repositorio
   
-  ![GitHub Card](https://github-readme-stats.vercel.app/api/pin/?username=Brauliovh3&repo=HATSUNE-MIKU&theme=radical)
+  ![GitHub Card](https://github-readme-stats.vercel.app/api/pin/?username=pukarumi23&repo=kitagawa&theme=radical)
 </div>
-
 ---
 
 <div align="center">
@@ -118,9 +117,9 @@ Si deseas ejecutar el bot en Termux (Android), sigue estos pasos sencillos:
   
   ## 📈 Estadísticas del Desarrollador
   
-  ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Brauliovh3&show_icons=true&theme=radical)
+  ![GitHub Stats](https://github-readme-stats.vercel.app/api?username=pukarumi23&show_icons=true&theme=radical&count_private=true&hide=issues)
   
-  ![Lenguajes Principales](https://github-readme-stats.vercel.app/api/top-langs/?username=Brauliovh3&layout=compact&theme=radical)
+  ![Lenguajes Principales](https://github-readme-stats.vercel.app/api/top-langs/?username=pukarumi23&layout=compact&theme=radical&langs_count=8)
 </div>
 
 ---
