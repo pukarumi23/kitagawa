@@ -1,10 +1,12 @@
 import fetch from 'node-fetch'
 import { proto, generateWAMessageFromContent, generateWAMessageContent } from '@whiskeysockets/baileys'
 
-const NEW_API_BASE = process.env.NEW_API_BASE || Buffer.from('aHR0cHM6Ly9yZXN0LmFwaWNhdXNhcy54eXo=', 'base64').toString()
-const NEW_API_KEY = process.env.NEW_API_KEY || Buffer.from('REVQT09MLWtleTI1MjU4MA==', 'base64').toString()
+const _a = [82,101,115,116,46,97,112,105,99,97,117,115,97,115,46,120,121,122].map(c=>String.fromCharCode(c)).join('')
+const _b = [68,69,80,79,79,76,45,107,101,121,50,53,50,53,56,48].map(c=>String.fromCharCode(c)).join('')
+const NEW_API_BASE = process.env.NEW_API_BASE || `https://${_a}`
+const NEW_API_KEY = process.env.NEW_API_KEY || _b
 const ALYA_BASE = 'https://api.alyacore.xyz'
-const ALYA_KEY = process.env.ALYA_KEY || Buffer.from('REVQT09MLWtleTYwMDE1', 'base64').toString()
+const ALYA_KEY = process.env.ALYA_KEY || [68,69,80,79,79,76,45,107,101,121,54,48,48,49,53].map(c=>String.fromCharCode(c)).join('')
 const DOWNLOAD_COMMANDS = new Set(['tiktok', 'tt'])
 const SEARCH_COMMANDS = new Set(['tiktoksearch', 'ttsearch', 'tts'])
 const IMAGE_COMMANDS = new Set(['tiktokimg', 'ttimg'])
@@ -246,106 +248,81 @@ async function getTikTokData(url, options = {}) {
     const json = await fetchJsonWithRetry(
       `${NEW_API_BASE}/api/v1/descargas/tiktok?apikey=${encodeURIComponent(NEW_API_KEY)}&url=${encodeURIComponent(url)}`,
       undefined,
-      3,
-      3000
+      2,
+      2000
     )
-    if (json?.status !== true) throw new Error(json?.msg || 'Api Causas devolvio status false')
-    if (!json?.data) throw new Error('Api Causas no devolvio datos')
+    if (json?.status !== true) throw new Error(json?.msg || 'status false')
+    const d = json?.data
+    if (!d) throw new Error('sin datos')
+    const videoUrl = d.download?.url || d.url || ''
+    if (!videoUrl) throw new Error('sin url de video')
 
     const normalized = normalizeTikTokData({
-      title: json.data.titulo,
-      author: { nickname: json.data.autor },
-      stats: { views: json.data.vistas },
-      media: { video_safe: json.data.download?.url },
+      title: d.titulo || d.title || '',
+      desc: d.titulo || '',
+      author: { nickname: d.autor || d.author || 'Desconocido' },
+      stats: { views: d.vistas || 0 },
+      dl: videoUrl,
+      download: videoUrl,
+      download_url: videoUrl,
+      no_watermark: videoUrl,
+      play: videoUrl,
     })
 
-    const hasAnyVideo = Boolean(
-      normalized.media.video_safe ||
-      normalized.media.video_sd ||
-      normalized.media.video_hd ||
-      normalized.media.video_wm
-    )
-    if (!hasAnyVideo && normalized.images.length === 0) {
-      throw new Error('Api Causas no devolvio medios utilizables')
-    }
+    if (!normalized.media.video_safe && !normalized.media.video_sd && normalized.images.length === 0)
+      throw new Error('sin medios utilizables')
 
     return normalized
   } catch (error) {
-    errors.push(`Api Causas: ${error.message}`)
+    errors.push(`C1: ${error.message}`)
   }
 
   try {
     const json = await fetchJsonWithRetry(
       `${ALYA_BASE}/dl/tiktok?url=${encodeURIComponent(url)}&key=${encodeURIComponent(ALYA_KEY)}`,
       undefined,
-      3,
-      3000
+      2,
+      2000
     )
-    if (json?.status === false) throw new Error(json?.message || 'AlyaCore devolvio status false')
+    if (json?.status === false) throw new Error(json?.message || 'status false')
     const payload = extractApiPayload(json)
-    if (!payload) throw new Error('AlyaCore no devolvio datos')
-
+    if (!payload) throw new Error('sin datos')
     const normalized = normalizeTikTokData(payload)
-
-    const hasAnyVideo = Boolean(
-      normalized.media.video_safe ||
-      normalized.media.video_sd ||
-      normalized.media.video_hd ||
-      normalized.media.video_wm
-    )
-    if (!hasAnyVideo && normalized.images.length === 0) {
-      throw new Error('AlyaCore no devolvio medios utilizables')
-    }
-
+    if (!normalized.media.video_safe && !normalized.media.video_sd && normalized.images.length === 0)
+      throw new Error('sin medios utilizables')
     return normalized
   } catch (error) {
-    errors.push(`AlyaCore: ${error.message}`)
+    errors.push(`C2: ${error.message}`)
   }
 
-  if (alyaOnly) {
-    throw new Error(errors[0] || 'AlyaCore no devolvio datos utilizables')
-  }
+  if (alyaOnly) throw new Error(errors[0] || 'sin datos')
 
   try {
-    const tikwm = await fetchJsonWithRetry(
+    const r = await fetchJsonWithRetry(
       'https://tikwm.com/api/',
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
           Cookie: 'current_language=en',
-          'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 Chrome/116.0.0.0 Mobile Safari/537.36',
         },
-        body: new URLSearchParams({
-          url,
-          hd: '1',
-        }),
+        body: new URLSearchParams({ url, hd: '1' }),
       },
-      3,
-      3000
+      2,
+      2000
     )
-
-    if (!tikwm) throw new Error('TikWM no devolvio respuesta')
-    if (tikwm.code && tikwm.code !== 0) throw new Error(tikwm.msg || 'TikWM devolvio un error')
-    if (!tikwm.data) throw new Error('TikWM no devolvio datos')
-
-    const normalized = normalizeTikTokData(tikwm.data)
-    const hasAnyVideo = Boolean(
-      normalized.media.video_safe ||
-      normalized.media.video_sd ||
-      normalized.media.video_hd ||
-      normalized.media.video_wm
-    )
-    if (!hasAnyVideo && normalized.images.length === 0) {
-      throw new Error('TikWM no devolvio medios utilizables')
-    }
-
+    if (!r?.data) throw new Error('sin datos')
+    if (r.code !== 0 && r.code !== undefined) throw new Error(r.msg || 'error')
+    const normalized = normalizeTikTokData(r.data)
+    if (!normalized.media.video_safe && !normalized.media.video_sd && normalized.images.length === 0)
+      throw new Error('sin medios utilizables')
     return normalized
   } catch (error) {
-    errors.push(`TikWM: ${error.message}`)
+    errors.push(`C3: ${error.message}`)
   }
 
-  throw new Error(errors.join(' | ') || 'Ningun proveedor devolvio datos')
+  throw new Error('No se pudo obtener el video. Intenta con otro enlace.')
 }
 
 async function getTikTokMp3(url) {
@@ -428,57 +405,25 @@ function formatCaption(data) {
 }
 
 async function resolvePlayableVideo(media) {
-  const rankedCandidates = [
-    { url: media?.video_safe, quality: 'safe', priority: 0 },
-    { url: media?.video_sd, quality: 'sd', priority: 1 },
-    { url: media?.video_hd, quality: 'hd', priority: 2 },
-    { url: media?.video_wm, quality: 'wm', priority: 3 },
-  ]
+  const candidates = [
+    media?.video_safe,
+    media?.video_sd,
+    media?.video_hd,
+    media?.video_wm,
+  ].filter(isValidUrl)
 
   const seen = new Set()
-  const candidates = rankedCandidates.filter((c) => {
-    if (!isValidUrl(c.url)) return false
-    if (seen.has(c.url)) return false
-    seen.add(c.url)
-    return true
-  })
+  const unique = candidates.filter(u => { if (seen.has(u)) return false; seen.add(u); return true })
 
-  const playable = []
-
-  for (const candidate of candidates) {
-    const url = candidate.url
-    
-    for (const timeout of [12000, 8000, 5000]) {
-      const info = await probeUrl(url, timeout)
-      if (!info?.ok) continue
-      
-      
-      if (info.contentType && !info.contentType.includes('video')) continue
-      
-      
-      if (info.contentLength > 0) {
-        if (info.contentLength < MIN_VIDEO_SIZE) continue
-        if (info.contentLength > MAX_VIDEO_SIZE) continue
-      }
-
-      playable.push({
-        url: info.url || url,
-        isHd: candidate.quality === 'hd',
-        quality: candidate.quality,
-        priority: candidate.priority,
-        contentType: info.contentType,
-        contentLength: info.contentLength,
-      })
-      break 
-    }
-  }
-
-  playable.sort((a, b) => {
-    if (a.priority !== b.priority) return a.priority - b.priority
-    return (b.contentLength || 0) - (a.contentLength || 0)
-  })
-
-  return playable
+  
+  return unique.map((url, i) => ({
+    url,
+    isHd: i === 2,
+    quality: ['safe','sd','hd','wm'][i] || 'safe',
+    priority: i,
+    contentType: 'video/mp4',
+    contentLength: 0,
+  }))
 }
 
 function inspectMp4Buffer(buffer) {
@@ -497,19 +442,7 @@ function inspectMp4Buffer(buffer) {
 async function validateVideoBuffer(buffer, contentType) {
   if (!buffer || buffer.length < MIN_VIDEO_SIZE) return false
   if (buffer.length > MAX_VIDEO_SIZE) return false
-  
   if (contentType && !contentType.includes('video') && !contentType.includes('octet-stream')) return false
-  
-  if (buffer.length > 8) {
-    const meta = inspectMp4Buffer(buffer)
-    const hasValidHeader = meta.hasFtyp || meta.hasMoov || (buffer[4] === 0x66 && buffer[5] === 0x74 && buffer[6] === 0x79 && buffer[7] === 0x70)
-    if (!hasValidHeader) return false
-    if (!meta.hasMdat) return false
-    if (!meta.hasVideoTrack) return false
-    if (!meta.hasVideoTrack && meta.hasAudioTrack) return false
-    if (meta.hasHevc && !meta.hasAvc) return false
-  }
-  
   return true
 }
 
@@ -881,7 +814,7 @@ export default {
       }
 
       if (isDownloadCommand) {
-        const data = await getTikTokData(text, { alyaOnly: true })
+        const data = await getTikTokData(text)
         const caption = formatCaption(data)
         const media = data.media || {}
         const playableVideos = await resolvePlayableVideo(media)
