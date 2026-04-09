@@ -5,10 +5,10 @@ export default {
   category: 'downloader',
   run: async (client, m, args, usedPrefix, command) => {
     if (!args[0]) {
-      return m.reply('🧡 Ingresa un enlace de Facebook.', global.miku)
+      return m.reply('💙 Ingresa un enlace de Facebook.', global.miku)
     }
     if (!args[0].match(/facebook\.com|fb\.watch|video\.fb\.com/)) {
-      return m.reply('🧡 Enlace inválido, envía un link de Facebook válido.', global.miku)
+      return m.reply('💙 Enlace inválido, envía un link de Facebook válido.', global.miku)
     }
     
     await m.react('⏳')
@@ -17,13 +17,13 @@ export default {
       const data = await getFacebookMedia(args[0])
       if (!data) {
         await m.react('❌')
-        return m.reply('🧡 No se pudo obtener el contenido.', global.miku)
+        return m.reply('💙 No se pudo obtener el contenido.', global.miku)
       }
       
       const caption = `╭━━━━━━━━━━━━━━━╮
-┃ 🧡 *FACEBOOK DOWNLOAD*
-┃${data.title ? `\n┃ 📌 ${data.title}` : ''}${data.resolution ? `\n┃ 🎬 ${data.resolution}` : ''}${data.duration ? `\n┃ ⏱️ ${data.duration}` : ''}
-╰━━`
+┃ 💙 *FACEBOOK DOWNLOAD*
+┃━━━━━━━━━━━━━━━${data.title ? `\n┃ 📌 ${data.title}` : ''}${data.resolution ? `\n┃ 🎬 ${data.resolution}` : ''}${data.duration ? `\n┃ ⏱️ ${data.duration}` : ''}
+╰━━━━━━━━━━━━━━━╯`
       
       if (data.type === 'video') {
         await client.sendMessage(m.chat, { 
@@ -44,7 +44,7 @@ export default {
       await m.react('✅')
     } catch (e) {
       await m.react('❌')
-      await m.reply(`🧡 *ERROR*\n\nOcurrió un error: ${e.message}`, global.miku)
+      await m.reply(`💙 *ERROR*\n\nOcurrió un error: ${e.message}`, global.miku)
     }
   }
 }
