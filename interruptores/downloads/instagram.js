@@ -10,18 +10,17 @@ export default {
   command: ['instagram', 'ig'],
   category: 'downloader',
   run: async (client, m, args, usedPrefix, command) => {
-    if (!args[0] || !args[0].trim()) {
+    if (!args[0]) {
       return m.reply('🌸 Por favor, ingresa un enlace de Instagram.', m, global.miku)
     }
-    const url = args[0].trim()
-    if (!url.match(/instagram\.com\/(p|reel|share|tv|stories)\//)) {
+    if (!args[0].match(/instagram\.com\/(p|reel|share|tv|stories)\//)) {
       return m.reply('🌸 El enlace no parece *válido*. Asegúrate de que sea de *Instagram*.', m, global.miku)
     }
     
     await m.react('⏳')
     
     try {
-      const data = await getInstagramMedia(url)
+      const data = await getInstagramMedia(args[0])
       if (!data) {
         await m.react('❌')
         return m.reply('🌸 No se pudo obtener el contenido.', m, global.miku)
@@ -29,7 +28,7 @@ export default {
       
       const caption = `🌸✨ *INSTAGRAM DOWNLOAD* ✨🌸
 ━━━━━━━━━━━━━━━━━━━━
-${data.title ? `👤 *Usuario:* ${data.title}\n` : ''}${data.caption ? `💬 *Descripción:* ${data.caption}\n` : ''}${data.like ? `❤️ *Likes:* ${data.like}\n` : ''}${data.comment ? `💭 *Comentarios:* ${data.comment}\n` : ''}${data.views ? `👁️ *Vistas:* ${data.views}\n` : ''}${data.duration ? `⏰ *Duración:* ${data.duration}\n` : ''}${data.resolution ? `🖼️ *Resolución:* ${data.resolution}\n` : ''}${data.format ? `🎀 *Formato:* ${data.format}\n` : ''}🔗 *Enlace:* ${url}
+${data.title ? `👤 *Usuario:* ${data.title}\n` : ''}${data.caption ? `💬 *Descripción:* ${data.caption}\n` : ''}${data.like ? `❤️ *Likes:* ${data.like}\n` : ''}${data.comment ? `💭 *Comentarios:* ${data.comment}\n` : ''}${data.views ? `👁️ *Vistas:* ${data.views}\n` : ''}${data.duration ? `⏰ *Duración:* ${data.duration}\n` : ''}${data.resolution ? `🖼️ *Resolución:* ${data.resolution}\n` : ''}${data.format ? `🎀 *Formato:* ${data.format}\n` : ''}🔗 *Enlace:* ${args[0]}
 ━━━━━━━━━━━━━━━━━━━━
 *「 ¡Descarga completada, senpai~! 💕 」*`
       
