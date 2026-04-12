@@ -1,12 +1,50 @@
 import { search, download } from 'aptoide-scraper'
 import { getBuffer } from "../../lib/message.js"
 
+// 💕 Bordes elaborados con figuras - ESTILO CHASKI GÓTICO MARIN 💕
+const topBorders = [
+  '💕 ── ♡ APTOIDE ♡ ── 💕',
+  '✦ ─── 💗 ─── ✦',
+  '🦋 ── ✨ DESCARGA ✨ ── 🦋',
+  '👑 ─────────────── 👑',
+  '🎀 ── 💓 ─── 🎀',
+  '⭐ ───────────── ⭐',
+  '💖 ── 🌸 ─── 💖',
+]
+
+const bottomBorders = [
+  '💕 ── ♡ ♡ ♡ ── 💕',
+  '✦ ─── 💗 ─── ✦',
+  '🦋 ── ✨ ✨ ✨ ── 🦋',
+  '👑 ─────────────── 👑',
+  '🎀 ── 💓 ─── 🎀',
+  '⭐ ───────────── ⭐',
+  '💖 ── 🌸 ─── 💖',
+]
+
+function getRandomTopBorder() {
+  return topBorders[Math.floor(Math.random() * topBorders.length)]
+}
+
+function getRandomBottomBorder() {
+  return bottomBorders[Math.floor(Math.random() * bottomBorders.length)]
+}
+
 export default {
   command: ['apk', 'aptoide', 'apkdl'],
   category: 'download',
   run: async (client, m, args, usedPrefix, command) => {
     if (!args || !args.length) {
-      return m.reply('🧡 Por favor, ingresa el nombre de la aplicación.', m. global.miku)
+      const top = getRandomTopBorder()
+      const bottom = getRandomBottomBorder()
+      return m.reply(`
+${top}
+
+💕 Por favor, ingresa el nombre 
+   de la aplicación que deseas.
+
+${bottom}
+      `.trim())
     }
     
     await m.react('⏳')
@@ -16,38 +54,83 @@ export default {
       const searchA = await search(query)
       if (!searchA || searchA.length === 0) {
         await m.react('❌')
-        return m.reply('🧡 No se encontraron resultados.', m. global.miku)
+        const top = getRandomTopBorder()
+        const bottom = getRandomBottomBorder()
+        return m.reply(`
+${top}
+
+⚠️ No se encontraron resultados 
+   para: "${query}"
+
+${bottom}
+        `.trim())
       }
       const apkInfo = await download(searchA[0].id)
       if (!apkInfo) {
         await m.react('❌')
-        return m.reply('🧡 No se pudo obtener la información de la aplicación.', m. global.miku)
+        const top = getRandomTopBorder()
+        const bottom = getRandomBottomBorder()
+        return m.reply(`
+${top}
+
+⚠️ No se pudo obtener la información 
+   de la aplicación.
+
+${bottom}
+        `.trim())
       }
       const { name, package: id, size, icon, dllink: downloadUrl, lastup } = apkInfo
-      const caption = `🧡 *APTOIDE DOWNLOAD* 🧡
+      
+      // 💕 DISEÑO GÓTICO ELABORADO MARIN 💕
+      const topBorder = getRandomTopBorder()
+      const bottomBorder = getRandomBottomBorder()
+      const caption = `
+${topBorder}
 
-🧡 *Nombre:* ${name}
-🔥 *Paquete:* ${id}
-🧡 *Última actualización:* ${lastup}
-🔥 *Tamaño:* ${size}
+💕 *APTOIDE DOWNLOAD* 💕
 
-🧡 *KITAGAWA BOT* 🧡`
+✧ Nombre: ${name}
+💗 Paquete: ${id}
+✧ Actualización: ${lastup}
+💗 Tamaño: ${size}
+
+${bottomBorder}
+      `.trim()
+      
       const sizeBytes = parseSize(size)
       if (sizeBytes > 524288000) {
         await m.react('❌')
-        return m.reply(`🧡 El archivo es demasiado grande (${size}).\n\n🔥 Descárgalo directamente desde aquí:\n${downloadUrl}`, m. global.miku)
+        const top = getRandomTopBorder()
+        const bottom = getRandomBottomBorder()
+        return m.reply(`
+${top}
+
+⚠️ El archivo es muy grande (${size})
+
+💕 Descárgalo directamente desde:
+${downloadUrl}
+
+${bottom}
+        `.trim())
       }
       await client.sendMessage(m.chat, { document: { url: downloadUrl }, mimetype: 'application/vnd.android.package-archive', fileName: `${name}.apk`, caption }, { quoted: m })
       await m.react('✅')
      } catch (e) {
       await m.react('❌')
-      await m.reply(`🧡🔥 *ERROR* 🔥🧡
+      const top = getRandomTopBorder()
+      const bottom = getRandomBottomBorder()
+      await m.reply(`
+${top}
 
-🧡 Ocurrió un error al ejecutar *${usedPrefix + command}*
+⚠️ *ERROR EN LA EJECUCIÓN*
 
-🔥 *Error:* ${e.message}
+💕 Comando: *${usedPrefix + command}*
+✧ Error: ${e.message}
 
-🧡 Inténtalo de nuevo o contacta soporte.`, m. global.miku)
+Inténtalo de nuevo o contacta soporte.
+
+${bottom}
+      `.trim())
     }
   },
 }
