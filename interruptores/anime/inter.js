@@ -79,13 +79,13 @@ const captions = {
 
 // Símbolos decorativos - DISEÑO MINIMALISTA MARIN
 const symbols = [
-  '✦ Marin ✦',
+  '✦ ◈◇◈◇◈◇◈◇◈◇◈ ✦',
   '💕 ♡ 💕',
-  '✧ Kitagawa ✧',
+  '✧ ▭▭▭▭▭▭▭▭▭ ✧',
   '🦋 ✨ 🦋',
-  '⭐ Marin ⭐',
+  '⭐ ■▭■▭■▭■▭■▭■ ⭐',
   '🎀 ♡ 🎀',
-  '💗 Elegancia 💗',
+  '💗 ▰▰▰▰▰▰▰▰ 💗',
   '(✿◡‿◡)',
   '˃͈◡˂͈',
   '(⌒‿⌒)',
