@@ -77,50 +77,78 @@ const captions = {
   facepalm: (from, to) => from === to ? `🤦🌹 Se frustra y se da una palmada en la cara... 😩` : `🤦🌹 Se da una palmada en la cara por`,
 }
 
-// Símbolos barrocos y decorativos con temática Marin
-const symbols = [
-  '✿═══════════════✿',
-  '🌸═══════════════🌸',
-  '🌹═══════════════🌹',
-  '🌺═══════════════🌺',
-  '🌷═══════════════🌷',
-  '✨═══════════════✨',
-  '💜═══════════════💜',
-  '╔═══════════════╗',
-  '╚═══════════════╝',
-  '❖═══════════════❖',
-  '✦═══════════════✦',
-  '★═══════════════★',
-  '❅═══════════════❅',
+// 🖤 Bordes góticos estilo Chaski 🖤
+const topBorders = [
+  '🖤🌙⚜️✨╔═══════❖═══════╗✨🌹☠️',
+  '💜👑⚜️✨╔═══════❖═══════╗✨🌸🖤',
+  '🖤💎⚜️✨╔═══════❖═══════╗✨🌺☠️',
+  '💜🌹⚜️✨╔═══════❖═══════╗✨🌷👑',
+  '🖤✨⚜️✨╔═══════❖═══════╗✨💐☠️',
 ]
 
-// Decoraciones florales exageradas
-const flowerDecorations = {
-  top: [
-    '🌸🌹🌺🌷🌻🪻',
-    '🌹💐🌸🌺✨💜🌷',
-    '🌷🌺🌹🌸💎👑🌻',
-    '✨🌸💕🌹🌺🌷💫',
-    '💐🌺🌷🌸🌹💜✨',
-    '🪻🌸🌹🌺💎✨💜',
-  ],
-  bottom: [
-    '🌸🌹🌺🌷🌻🪻',
-    '💫✨💜🌷🌺🌹💐',
-    '🌻🪻✨💎👑🌺🌷',
-    '💕🌷🌸🌹🌺✨💫',
-    '✨💜🌷🌸🌹🌺💐',
-    '✨🪻🌻💎💜✨🌸🌹',
-  ]
+const bottomBorders = [
+  '╚═══════❖═══════╝✨☠️🌹⚜️🌙🖤',
+  '╚═══════❖═══════╝✨🌸💜⚜️👑💜',
+  '╚═══════❖═══════╝✨🌺⚜️💎🖤',
+  '╚═══════❖═══════╝✨🌷⚜️🌹💜👑',
+  '╚═══════❖═══════╝✨💐⚜️✨🖤',
+]
+
+// Tipografías especiales para Marin
+const styleNames = [
+  '𝓜𝓪𝓻𝓲𝓷',      // Cursiva negrita
+  '𝑀𝒶𝓇𝒾𝓃',      // Cursiva
+  '𝙼𝚊𝚛𝚒𝚗',      // Monoespaciada
+  '𝑴𝒂𝒓𝒊𝒏',      // Negrita cursiva
+  '𝖬𝖆𝖓𝖎𝖙',      // Sans-serif gótica
+]
+
+// Descripciones de "modo activado" tipo Chaski
+const chaoskiDescriptions = [
+  '«Modo seducción activado»',
+  '«Modo romance encendido»',
+  '«Modo pasión desatada»',
+  '«Modo fashionista absoluto»',
+  '«Modo provocación total»',
+  '«Modo cosplay iniciado»',
+  '«Modo drama extremo»',
+  '«Modo diosa activado»',
+  '«Modo arrebatadora»',
+  '«Modo irresistible encendido»',
+]
+
+// Adjetivos tipo Chaski para Marin
+const chaoskiAdjectives = [
+  'Desatada sin piedad...',
+  'Actuando sin control...',
+  'Siendo provocativa...',
+  'Mostrando su poder...',
+  'Sin inhibiciones...',
+  'Desenfrenada totalmente...',
+  'Arrebatadora por naturaleza...',
+  'Seductora sin límites...',
+  'Dominante y sensual...',
+  'Destructora de corazones...',
+]
+
+function getRandomTopBorder() {
+  return topBorders[Math.floor(Math.random() * topBorders.length)]
 }
 
-function getRandomSymbol() {
-  return symbols[Math.floor(Math.random() * symbols.length)]
+function getRandomBottomBorder() {
+  return bottomBorders[Math.floor(Math.random() * bottomBorders.length)]
 }
 
-function getRandomFlowerDecoration(position) {
-  const decorations = flowerDecorations[position]
-  return decorations[Math.floor(Math.random() * decorations.length)]
+function getRandomStyleName() {
+  return styleNames[Math.floor(Math.random() * styleNames.length)]
+}
+
+function getRandomChaoskiDescription() {
+  return chaoskiDescriptions[Math.floor(Math.random() * chaoskiDescriptions.length)]
+}
+
+function getRandomChaoskiAdjective() {
+  return chaoskiAdjectives[Math.floor(Math.random() * chaoskiAdjectives.length)]
 }
 
 const alias = {
@@ -213,31 +241,32 @@ command: ['angry','enojado','enojada','bleh','bored','aburrido','aburrida','clap
     const genero = global.db.data.users[m.sender]?.genre || 'Oculto'
     const captionText = captions[currentCommand](fromName, toName, genero)
     
-    // 🌸 DISEÑO MARIN KITAGAWA GÓTICO/BARROCO EXAGERADO 🌸
-    const topFlowers = getRandomFlowerDecoration('top')
-    const bottomFlowers = getRandomFlowerDecoration('bottom')
-    const symbolLine = getRandomSymbol()
+    // 🖤 DISEÑO CHASKI GÓTICO MARIN KITAGAWA 🖤
+    const topBorder = getRandomTopBorder()
+    const bottomBorder = getRandomBottomBorder()
+    const styledName = getRandomStyleName()
+    const chaoskiMode = getRandomChaoskiDescription()
+    const chaoskiAction = getRandomChaoskiAdjective()
     
     let caption;
     if (who !== m.sender) {
-      caption = `
-${topFlowers}
-${symbolLine}
-✨ \`${fromName}\` ✨
+      caption = `${topBorder}
+${styledName}
+
+💬 ${chaoskiMode} 
 ${captionText}
-\`${toName}\` ✨
-${symbolLine}
-${bottomFlowers}
-      `.trim()
+${chaoskiAction} 💀
+
+${bottomBorder}`
     } else {
-      caption = `
-${topFlowers}
-${symbolLine}
-✨ \`${fromName}\` ✨
+      caption = `${topBorder}
+${styledName}
+
+💬 ${chaoskiMode}
 ${captionText}
-${symbolLine}
-${bottomFlowers}
-      `.trim()
+${chaoskiAction} 💀
+
+${bottomBorder}`
     }
     
     try {
@@ -251,20 +280,19 @@ ${bottomFlowers}
     await client.sendMessage(m.chat, { video: { url }, gifPlayback: true, caption, mentions: [who, m.sender] }, { quoted: m })
     } catch (e) {
     await m.reply(`
-🌹━━━━━━━━━━━━━━━━━━🌹
+🖤⚜️╔═══════════════════════╗⚜️🖤
 ✨ ERROR EN LA EJECUCIÓN ✨
-🌹━━━━━━━━━━━━━━━━━━🌹
+🖤⚜️╚═══════════════════════╝⚜️🖤
 
-🎤 ${global.miku || 'HATSUNE MIKU'} 🎵
+💀 ${global.miku || 'HATSUNE MIKU'} 💀
 
-Ocurrió un error inesperado en el comando:
+Ocurrió un error inesperado en:
 *${usedPrefix + command}*
 
-Por favor, intenta nuevamente o contacta soporte.
+💬 Intenta de nuevo...
+❌ Error: *${e.message}* ❌
 
-🌺 [Error: *${e.message}*] 🌺
-
-🌹━━━━━━━━━━━━━━━━━━🌹
+🖤⚜️╔═══════════════════════╗⚜️🖤
     `.trim())
     }
   },
