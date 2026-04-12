@@ -6,7 +6,7 @@ export default {
   run: async (client, m, args, usedPrefix, command) => {
     const text = args.join(' ')
     if (!text) {
-      return client.reply(m.chat, `🧡 Por favor, Ingrese un término de búsqueda.`, m, global.miku)
+      return client.reply(m.chat, `🌸 Por favor, ingresa un término de búsqueda.`, m, global.miku)
     }
     const bannedWords = [
   '+18', '18+', 'contenido adulto', 'contenido explícito', 'contenido sexual',
@@ -41,7 +41,7 @@ export default {
     const lowerText = text.toLowerCase()
     const nsfwEnabled = global.db.data.chats[m.chat]?.nsfw === true
     if (!nsfwEnabled && bannedWords.some(word => lowerText.includes(word))) {
-      return m.reply('🧡 Este comando no *permite* búsquedas de contenido *+18* o *NSFW*', m, global.miku)
+      return m.reply('🌸 Este comando no *permite* búsquedas de contenido *+18* o *NSFW*', m, global.miku)
     }
     try {
       const results = await getImageSearchResults(text)
@@ -53,13 +53,22 @@ export default {
           }
         }
       }
-      if (checked.length < 2) { 
-      return client.reply(m.chat, `🧡 Se requieren al menos 2 imágenes válidas para mostrar un álbum.`, m, global.miku)
+      if (checked.length < 2) {
+        return client.reply(m.chat, `🌸 Se requieren al menos 2 imágenes válidas para mostrar un álbum.`, m, global.miku)
       }
-      const medias = checked.slice(0, 10).map(r => ({ type: 'image', data: { url: r.url }, caption: `ㅤ۟∩　ׅ　★　ׅ　🅖oogle 🅘mage 🅢earch　ׄᰙ　\n\n` + `${r.title ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Título* › ${r.title}\n` : ''}` + `${r.domain ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Fuente* › ${r.domain}\n` : ''}` + `${r.resolution ? `𖣣ֶㅤ֯⌗ ☆  ⬭ *Resolución* › ${r.resolution}\n` : ''}` + `𖣣ֶㅤ֯⌗ ☆  ⬭ *Búsqueda* › ${text}` }))
+      const medias = checked.slice(0, 10).map(r => ({
+        type: 'image',
+        data: { url: r.url },
+        caption: `🌸✨ *GOOGLE IMAGE SEARCH* ✨🌸\n━━━━━━━━━━━━━━━━━━━━\n` +
+          `${r.title ? `🎀 *Título* › ${r.title}\n` : ''}` +
+          `${r.domain ? `💻 *Fuente* › ${r.domain}\n` : ''}` +
+          `${r.resolution ? `🖼️ *Resolución* › ${r.resolution}\n` : ''}` +
+          `🔍 *Búsqueda* › ${text}\n` +
+          `━━━━━━━━━━━━━━━━━━━━\n*「 ¡Encontrado, senpai~! 💕 」*`
+      }))
       await client.sendAlbumMessage(m.chat, medias, { quoted: m })
     } catch (e) {
-      await m.reply(`🧡 An unexpected error occurred while executing command *${usedPrefix + command}*. Please try again or contact support if the issue persists.\n> [Error: *${e.message}*]`)
+      await m.reply(`🌸 *ERROR*\n\nOcurrió un error al ejecutar *${usedPrefix + command}*. Intenta de nuevo~\n> [Error: *${e.message}*]`)
     }
   }
 }
@@ -71,7 +80,7 @@ async function getImageSearchResults(query) {
     { url: `${global.APIs.delirius.url}/search/gimage?query=${encodeURIComponent(query)}`, extractor: res => res.data?.map(d => ({ url: d.url, title: d.origin?.title || null, domain: d.origin?.website?.domain || null, resolution: d.width && d.height ? `${d.width}x${d.height}` : null })) || [] },
     { url: `${global.APIs.apifaa.url}/faa/google-image?query=${encodeURIComponent(query)}`, extractor: res => res.result?.map(u => ({ url: u, title: null, domain: null, resolution: null })) || [] }
   ]
-  
+
   for (const { url, extractor } of endpoints) {
     try {
       const res = await axios.get(url)
