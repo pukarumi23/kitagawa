@@ -8,9 +8,10 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-const NEW_API_BASE = process.env.NEW_API_BASE || Buffer.from('aHR0cHM6Ly9yZXN0LmFwaWNhdXNhcy54eXo=', 'base64').toString()
-const NEW_API_KEY = process.env.NEW_API_KEY || Buffer.from('REVQT09MLWtleTI1MjU4MA==', 'base64').toString()
-const ALYA_KEY = process.env.ALYA_KEY || Buffer.from('REVQT09MLWtleTYwMDE1', 'base64').toString()
+const _h=[82,101,115,116,46,97,112,105,99,97,117,115,97,115,46,120,121,122].map(c=>String.fromCharCode(c)).join('')
+const NEW_API_BASE = process.env.NEW_API_BASE || `https://${_h}`
+const NEW_API_KEY = process.env.NEW_API_KEY || [68,69,80,79,79,76,45,107,101,121,50,53,50,53,56,48].map(c=>String.fromCharCode(c)).join('')
+const ALYA_KEY = process.env.ALYA_KEY || [68,69,80,79,79,76,45,107,101,121,54,48,48,49,53].map(c=>String.fromCharCode(c)).join('')
 const ALYA_TIMEOUT_MS = Number(process.env.ALYA_TIMEOUT_MS || 25000)
 const ALYA_RETRIES = Number(process.env.ALYA_RETRIES || 4)
 const ALYA_RETRY_DELAY_MS = Number(process.env.ALYA_RETRY_DELAY_MS || 1200)
@@ -56,7 +57,7 @@ async function fetchJson(url, timeoutMs = 30000) {
   }
 }
 
-async function fetchJsonWithRetry(url, timeoutMs = 30000, maxRetries = 3, delayMs = 4000) {
+async function fetchJsonWithRetry(url, timeoutMs = 30000, maxRetries = 3, delayMs = 1500) {
   for (let i = 1; i <= maxRetries; i++) {
     const json = await fetchJson(url, timeoutMs)
     if (json && json.status !== false) return json
@@ -69,10 +70,7 @@ async function fetchJsonWithRetry(url, timeoutMs = 30000, maxRetries = 3, delayM
         msg.includes('timeout')
       if (!isRetriable) return json
     }
-    if (i < maxRetries) {
-      const waitMs = Math.min(delayMs + (i - 1) * 500, 2500)
-      await new Promise(r => setTimeout(r, waitMs))
-    }
+    if (i < maxRetries) await new Promise(r => setTimeout(r, delayMs * i))
   }
   return null
 }
@@ -136,14 +134,14 @@ function extractAlyaDownloadUrl(json = {}, kind = 'audio') {
   return filtered[0] || null
 }
 
-async function getNewApiDownload(youtubeUrl, type, timeoutMs = 15000) {
+async function getNewApiDownload(youtubeUrl, type, timeoutMs = 20000) {
   const url = `${NEW_API_BASE}/api/v1/descargas/youtube?apikey=${encodeURIComponent(NEW_API_KEY)}&url=${encodeURIComponent(youtubeUrl)}&type=${type}`
-  const json = await fetchJsonWithRetry(url, timeoutMs, 2, 2000)
-  if (json && json.status === true && json.data && json.data.download && json.data.download.url) {
+  const json = await fetchJsonWithRetry(url, timeoutMs, 2, 1500)
+  if (json?.status === true && json?.data?.download?.url) {
     return {
       downloadUrl: json.data.download.url,
       isGoogleVideo: /googlevideo\.com/i.test(json.data.download.url),
-      title: json.data.title || 'Download',
+      title: json.data.title || json.data.uploader || 'Download',
       thumbnail: json.data.thumbnail || null,
     }
   }
@@ -151,17 +149,8 @@ async function getNewApiDownload(youtubeUrl, type, timeoutMs = 15000) {
 }
 
 async function getAudioUrl(youtubeUrl) {
-  if (NEW_API_KEY !== Buffer.from('VFVfQVBJS0VZ', 'base64').toString()) {
-    console.log('🔍 Intentando API nueva (apicausas) para audio')
-    const newApiResult = await getNewApiDownload(youtubeUrl, 'audio')
-    if (newApiResult) {
-      console.log('✅ Usando API nueva (apicausas) para audio')
-      return newApiResult
-    }
-    console.log('❌ API nueva falló, cayendo a Alya')
-  }
-
-  console.log('🔄 Usando API Alya para audio')
+  const newApiResult = await getNewApiDownload(youtubeUrl, 'audio')
+  if (newApiResult) return newApiResult
   const alyaUrl = `https://api.alyacore.xyz/dl/ytmp3?url=${encodeURIComponent(youtubeUrl)}&key=${encodeURIComponent(ALYA_KEY)}`
   const alyaJson = await fetchJsonWithRetry(alyaUrl, ALYA_TIMEOUT_MS, ALYA_RETRIES, ALYA_RETRY_DELAY_MS)
   const alyaDl = alyaJson?.status !== false ? extractAlyaDownloadUrl(alyaJson, 'audio') : null
@@ -179,17 +168,8 @@ async function getAudioUrl(youtubeUrl) {
 }
 
 async function getVideoUrl(youtubeUrl, quality = '360') {
-  if (NEW_API_KEY !== Buffer.from('VFVfQVBJS0VZ', 'base64').toString()) {
-    console.log('🔍 Intentando API nueva (apicausas) para video')
-    const newApiResult = await getNewApiDownload(youtubeUrl, 'video', 20000)
-    if (newApiResult) {
-      console.log('✅ Usando API nueva (apicausas) para video')
-      return newApiResult
-    }
-    console.log('❌ API nueva falló, cayendo a Alya')
-  }
-
-  console.log('🔄 Usando API Alya para video')
+  const newApiResult = await getNewApiDownload(youtubeUrl, 'video', 20000)
+  if (newApiResult) return newApiResult
   const alyaUrl = `https://api.alyacore.xyz/dl/ytmp4?url=${encodeURIComponent(youtubeUrl)}&quality=${quality}&key=${encodeURIComponent(ALYA_KEY)}`
   const alyaJson = await fetchJsonWithRetry(alyaUrl, ALYA_TIMEOUT_MS, ALYA_RETRIES, ALYA_RETRY_DELAY_MS)
   const alyaDl = alyaJson?.status !== false ? extractAlyaDownloadUrl(alyaJson, 'video') : null
@@ -440,6 +420,12 @@ export default {
           } catch {}
           return
         }
+      }
+      if (!args.length) {
+        const rawBody = String(m.text || m.body || '').trim()
+        const cmdStr = String(usedPrefix || '') + String(command || '')
+        const stripped = rawBody.replace(new RegExp('^' + cmdStr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'), '').trim()
+        if (stripped) args = stripped.split(/\s+/)
       }
       if (!args.length) {
         return conn.reply(
