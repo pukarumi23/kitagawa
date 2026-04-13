@@ -72,7 +72,6 @@ console.error(`Error en plugin.all -> ${name}`, err)
 }}}
 
 if (!match) {
- 
   const buttonId = m.body || m.text;
   if (buttonId && (
     buttonId.includes('youtube_audio_') || 
@@ -113,10 +112,11 @@ const consolePrimary = chatData.primaryBot
 const isMainBot = !consolePrimary || consolePrimary === (client.user?.id?.split(':')[0] || client.user?.lid) + '@s.whatsapp.net'
 
 if (isMainBot) {
-const h = chalk.bold.blue('╔⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍···')
-const t = chalk.bold.blue('╚⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍⚍···')
-const v = chalk.bold.blue('┇')
-console.log(`\n${h}\n${chalk.bold.yellow(`${v} Fecha: ${chalk.whiteBright(moment().format('DD/MM/YY HH:mm:ss'))} p. m.`)}\n${chalk.bold.blueBright(`${v} Usuario: ${chalk.whiteBright(`(${pushname})`)}`)}\n${chalk.bold.magentaBright(`${v} Remitente: ${gradient('deepskyblue', 'darkorchid')(sender)}`)}\n${m.isGroup ? chalk.bold.cyanBright(`${v} Grupo: ${chalk.greenBright(groupName)}\n${v} Mensaje: ${body}`) : chalk.bold.greenBright(`${v} Mensaje: ${body}`)}\n${t}`)
+// 💕 CONSOLA MARIN KITAGAWA - SOLO BORDES 💕
+const h = chalk.bold.hex('#ff69b4')('╔══🌸〔 † 𝕸𝖆𝖗𝖎𝖓 𝕶𝖎𝖙𝖆𝖌𝖆𝖜𝖆 † 〕🌸══╗')
+const t = chalk.bold.hex('#ff69b4')('╚══🌸〔 † 𝕱𝖎𝖓 𝖉𝖊𝖑 𝕽𝖊𝖌𝖎𝖘𝖙𝖎𝖔 † 〕🌸══╝')
+const v = chalk.bold.hex('#ff1493')('┇')
+console.log(`\n${h}\n${v}\n${t}`)
 }
 
 const hasPrefix = settings.prefix === true ? true : (Array.isArray(settings.prefix) ? settings.prefix : typeof settings.prefix === 'string' ? [settings.prefix] : []).some(p => m.text?.startsWith(p))
