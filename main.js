@@ -8,8 +8,7 @@ import seeCommands from './lib/system/commandLoader.js';
 import initDB from './lib/system/initDB.js';
 import enableFeatures, { level } from './interruptores/enable.js';
 import { getGroupAdmins } from './lib/message.js';
-import { processYouTubeButton } from './interruptores/downloads/play.js';
-import { peekGroupMetadata, safeGetGroupMetadata } from './lib/utils.js';
+import { processYouTubeButton } from './interruptores/downloads/play.js'
 
 seeCommands()
 
