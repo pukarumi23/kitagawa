@@ -266,9 +266,8 @@ const consolePrimary = chatData.primaryBot
 const isMainBot = !consolePrimary || consolePrimary === (client.user?.id?.split(':')[0] || client.user?.lid) + '@s.whatsapp.net'
 
 if (isMainBot && LOG_MESSAGES) {
-// 💕 CONSOLA MARIN KITAGAWA - SOLO BORDES 💕
 const h = chalk.bold.hex('#ff69b4')('╔══🌸〔 † 𝕸𝖆𝖗𝖎𝖓 𝕶𝖎𝖙𝖆𝖌𝖆𝖜𝖆 † 〕🌸══╗')
-const t = chalk.bold.hex('#ff69b4')('╚══🌸〔 † 𝕱𝖎𝖓 𝖉𝖊𝖑 𝕽𝖊𝖌𝖎𝖘𝖙𝖎𝖔 † 〕🌸══╝')
+const t = chalk.bold.hex('#ff69b4')('╚══🌸〔 ═════════════════ 〕🌸══╝')
 const v = chalk.bold.hex('#ff1493')('┇')
 console.log(`\n${h}\n${v}\n${t}`)
 }
