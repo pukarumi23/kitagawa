@@ -11,26 +11,26 @@ export default {
   category: 'downloader',
   run: async (client, m, args, usedPrefix, command) => {
     if (!args[0]) {
-      return m.reply('🌸 Por favor, ingresa un enlace de Instagram.', m, global.miku)
+      return m.reply('✨💕 Ehh~ ¡Dame ese enlace de Instagram, cariño~! 💕✨', m, global.miku)
     }
     if (!args[0].match(/instagram\.com\/(p|reel|share|tv|stories)\//)) {
-      return m.reply('🌸 El enlace no parece *válido*. Asegúrate de que sea de *Instagram*.', m, global.miku)
+      return m.reply('💔 Ese enlace no parece válido, gatito~ Asegúrate de que sea de *Instagram* de verdad, ¿si? 💕', m, global.miku)
     }
     
-    await m.react('⏳')
+    await m.react('✨')
     
     try {
       const data = await getInstagramMedia(args[0])
       if (!data) {
-        await m.react('❌')
-        return m.reply('🌸 No se pudo obtener el contenido.', m, global.miku)
+        await m.react('💔')
+        return m.reply('🌸 Aww... No pude obtener el contenido~ Intenta con otro enlace, ¿sí? 💕', m, global.miku)
       }
       
-      const caption = `🌸✨ *INSTAGRAM DOWNLOAD* ✨🌸
+      const caption = `✨💕 *DESCARGA MARIN* 💕✨
 ━━━━━━━━━━━━━━━━━━━━
 ${data.title ? `👤 *Usuario:* ${data.title}\n` : ''}${data.caption ? `💬 *Descripción:* ${data.caption}\n` : ''}${data.like ? `❤️ *Likes:* ${data.like}\n` : ''}${data.comment ? `💭 *Comentarios:* ${data.comment}\n` : ''}${data.views ? `👁️ *Vistas:* ${data.views}\n` : ''}${data.duration ? `⏰ *Duración:* ${data.duration}\n` : ''}${data.resolution ? `🖼️ *Resolución:* ${data.resolution}\n` : ''}${data.format ? `🎀 *Formato:* ${data.format}\n` : ''}🔗 *Enlace:* ${args[0]}
 ━━━━━━━━━━━━━━━━━━━━
-*「 ¡Descarga completada, senpai~! 💕 」*`
+*「 ¡Te lo traigo con amor~! 💕 」*`
       
       const tempFilePath = await downloadFile(data.url, `${Date.now()}_ig.${data.type === 'video' ? 'mp4' : 'jpg'}`)
       
@@ -54,10 +54,10 @@ ${data.title ? `👤 *Usuario:* ${data.title}\n` : ''}${data.caption ? `💬 *De
         fs.unlinkSync(tempFilePath)
       }
       
-      await m.react('✅')
+      await m.react('💕')
     } catch (e) {
-      await m.react('❌')
-      await m.reply(`🌸 *ERROR*\n\nOcurrió un error al ejecutar *${usedPrefix + command}*\n💕 *Detalle:* ${e.message}\n\n*「 Intenta de nuevo, senpai~! 」*`, m, global.miku)
+      await m.react('💔')
+      await m.reply(`✨ *¡OOPS!* 💕\n\nAlgo salió mal en *${usedPrefix + command}*~\n🌸 *Detalle:* ${e.message}\n\n*「 Intenta de nuevo, ¿si? Cuento contigo~ 」*`, m, global.miku)
     }
   }
 }
