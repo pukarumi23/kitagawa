@@ -5,25 +5,25 @@ export default {
   category: 'downloader',
   run: async (client, m, args, usedPrefix, command) => {
     if (!args[0]) {
-      return m.reply('🌸 Ingresa un enlace de Facebook.', global.miku)
+      return m.reply('✨💕 Ehh~ ¡Dame ese enlace de Facebook, cariño~! 💕✨', global.miku)
     }
     if (!args[0].match(/facebook\.com|fb\.watch|video\.fb\.com/)) {
-      return m.reply('🌸 Enlace inválido, envía un link de Facebook válido.', global.miku)
+      return m.reply('💔 Ese enlace no es válido, gatito~ Envía uno de Facebook de verdad, ¿si? 💕', global.miku)
     }
     
-    await m.react('⏳')
+    await m.react('✨')
     
     try {
       const data = await getFacebookMedia(args[0])
       if (!data) {
-        await m.react('❌')
-        return m.reply('🌸 No se pudo obtener el contenido.', global.miku)
+        await m.react('💔')
+        return m.reply('🌸 Aww... No pude obtener el contenido~ Intenta con otro enlace, ¿sí? 💕', global.miku)
       }
       
-      const caption = `🌸✨ *FACEBOOK DOWNLOAD* ✨🌸
-━━━━━━━━━━━━━━━━━━━━${data.title ? `\n💬 *Título:* ${data.title}` : ''}${data.resolution ? `\n🎀 *Calidad:* ${data.resolution}` : ''}${data.duration ? `\n⏰ *Duración:* ${data.duration}` : ''}
+      const caption = `✨💕 *DESCARGA MARIN* 💕✨
+━━━━━━━━━━━━━━━━━━━━${data.title ? `\n💖 *Título:* ${data.title}` : ''}${data.resolution ? `\n🌸 *Calidad:* ${data.resolution}` : ''}${data.duration ? `\n⏰ *Duración:* ${data.duration}` : ''}
 ━━━━━━━━━━━━━━━━━━━━
-*「 ¡Descarga completada, senpai~! 💕 」*`
+*「 ¡Te lo traigo con amor~! 💕 」*`
       
       if (data.type === 'video') {
         await client.sendMessage(m.chat, { 
@@ -41,10 +41,10 @@ export default {
       } else {
         throw new Error('Contenido no soportado.')
       }
-      await m.react('✅')
+      await m.react('💕')
     } catch (e) {
-      await m.react('❌')
-      await m.reply(`🌸 *ERROR*\n\nOcurrió un error: ${e.message}`, global.miku)
+      await m.react('💔')
+      await m.reply(`✨ *¡OOPS!* 💕\n\nAlgo salió mal: ${e.message}\n\n💖 Intenta de nuevo, ¿si? Cuento contigo~ ✨`, global.miku)
     }
   }
 }
