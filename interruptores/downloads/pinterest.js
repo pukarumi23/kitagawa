@@ -7,23 +7,23 @@ export default {
     const text = args.join(' ')
     const isPinterestUrl = /^https?:\/\//.test(text)
     if (!text) {
-      return m.reply('💙 Por favor, ingresa un término de búsqueda o un enlace de Pinterest.', m, global.miku)
+      return m.reply('✨💕 Ehh~ ¡Dame un término de búsqueda o un enlace de Pinterest, cariño~! 💕✨', m, global.miku)
     }
     
-    await m.react('⏳')
+    await m.react('✨')
     
     try {
       if (isPinterestUrl) {
         const data = await getPinterestDownload(text)
         if (!data) {
-          await m.react('❌')
-          return m.reply('💙 No se pudo obtener el contenido.')
+          await m.react('💔')
+          return m.reply('🌸 Aww... No pude obtener el contenido~ Intenta con otro enlace, ¿sí? 💕')
         }
-        const caption = `💙 *PINTEREST DOWNLOAD* 💙
+        const caption = `✨💕 *DESCARGA MARIN* 💕✨
 
-${data.title ? `💙 *Título:* ${data.title}\n` : ''}${data.description ? `🌱 *Descripción:* ${data.description}\n` : ''}${data.author ? `💙 *Autor:* ${data.author}\n` : ''}${data.username ? `🌱 *Usuario:* ${data.username}\n` : ''}${data.followers ? `💙 *Seguidores:* ${data.followers}\n` : ''}${data.uploadDate ? `🌱 *Fecha:* ${data.uploadDate}\n` : ''}${data.likes ? `💙 *Likes:* ${data.likes}\n` : ''}${data.comments ? `🌱 *Comentarios:* ${data.comments}\n` : ''}${data.views ? `💙 *Vistas:* ${data.views}\n` : ''}${data.saved ? `🌱 *Guardados:* ${data.saved}\n` : ''}${data.format ? `💙 *Formato:* ${data.format}\n` : ''}🌱 *Enlace:* ${text}
+${data.title ? `💖 *Título:* ${data.title}\n` : ''}${data.description ? `🌸 *Descripción:* ${data.description}\n` : ''}${data.author ? `💖 *Autor:* ${data.author}\n` : ''}${data.username ? `🌸 *Usuario:* ${data.username}\n` : ''}${data.followers ? `💖 *Seguidores:* ${data.followers}\n` : ''}${data.uploadDate ? `🌸 *Fecha:* ${data.uploadDate}\n` : ''}${data.likes ? `💖 *Likes:* ${data.likes}\n` : ''}${data.comments ? `🌸 *Comentarios:* ${data.comments}\n` : ''}${data.views ? `💖 *Vistas:* ${data.views}\n` : ''}${data.saved ? `🌸 *Guardados:* ${data.saved}\n` : ''}${data.format ? `💖 *Formato:* ${data.format}\n` : ''}🌸 *Enlace:* ${text}
 
-💙 *HATSUNE MIKU* 💙`
+✨ *¡Te lo traigo con amor~!* 💕`
         if (data.type === 'video') {
           await client.sendMessage(m.chat, { video: { url: data.url }, caption, mimetype: 'video/mp4', fileName: 'pin.mp4' }, { quoted: m })
         } else if (data.type === 'image') {
@@ -31,29 +31,29 @@ ${data.title ? `💙 *Título:* ${data.title}\n` : ''}${data.description ? `🌱
         } else {
           throw new Error('Contenido no soportado.')
         }
-        await m.react('✅')
+        await m.react('💕')
       } else {
         const results = await getPinterestSearch(text)
         if (!results || results.length === 0) {
-          await m.react('❌')
-          return m.reply(`💙 No se encontraron resultados para *${text}*.`)
+          await m.react('💔')
+          return m.reply(`🌸 Aww... No encontré nada con eso~ Intenta otra búsqueda, ¿si? 💕`)
         }
-        const medias = results.slice(0, 10).map(r => ({ type: r.type === 'video' ? 'video' : 'image', data: { url: r.image }, caption: `💙🌱 *PINTEREST SEARCH* 🌱💙
+        const medias = results.slice(0, 10).map(r => ({ type: r.type === 'video' ? 'video' : 'image', data: { url: r.image }, caption: `✨💕 *BÚSQUEDA MARIN* 💕✨
 
-${r.title ? `💙 *Título:* ${r.title}\n` : ''}${r.description ? `🌱 *Descripción:* ${r.description}\n` : ''}${r.name ? `💙 *Autor:* ${r.name}\n` : ''}${r.username ? `🌱 *Usuario:* ${r.username}\n` : ''}${r.followers ? `💙 *Seguidores:* ${r.followers}\n` : ''}${r.likes ? `🌱 *Likes:* ${r.likes}\n` : ''}${r.created_at ? `💙 *Fecha:* ${r.created_at}\n` : ''}
-💙 *HATSUNE MIKU BOT* 💙` }))
+${r.title ? `💖 *Título:* ${r.title}\n` : ''}${r.description ? `🌸 *Descripción:* ${r.description}\n` : ''}${r.name ? `💖 *Autor:* ${r.name}\n` : ''}${r.username ? `🌸 *Usuario:* ${r.username}\n` : ''}${r.followers ? `💖 *Seguidores:* ${r.followers}\n` : ''}${r.likes ? `🌸 *Likes:* ${r.likes}\n` : ''}${r.created_at ? `💖 *Fecha:* ${r.created_at}\n` : ''}
+✨ *¡Te lo traigo con amor~!* 💕` }))
         await client.sendAlbumMessage(m.chat, medias, { quoted: m })
-        await m.react('✅')
+        await m.react('💕')
       }
     } catch (e) {
-      await m.react('❌')
-      await m.reply(`💙 *ERROR* 💙
+      await m.react('💔')
+      await m.reply(`✨ *¡OOPS!* 💕
 
-💙 Ocurrió un error al ejecutar *${usedPrefix + command}*
+Algo salió mal en *${usedPrefix + command}*~
 
-🌱 *Error:* ${e.message}
+🌸 *Error:* ${e.message}
 
-💙 Inténtalo de nuevo o contacta soporte.`)
+💖 Intenta de nuevo, ¿si? Cuento contigo~ ✨`)
     }
   }
 }
