@@ -11,10 +11,10 @@ export default {
     const text = args.join(' ').trim()
 
     if (!text) {
-      return m.reply('💙 Por favor, ingresa el enlace de Mediafire o una palabra clave.', m, global.miku)
+      return m.reply('✨💕 Ehh~ ¡Dame ese enlace de Mediafire o una palabra clave para buscar, cariño~! 💕✨', m, global.miku)
     }
 
-    await m.react('⏳')
+    await m.react('✨')
 
     try {
       const isUrl = /^https?:\/\/(www\.)?mediafire\.com\/.+/i.test(text)
@@ -26,47 +26,47 @@ export default {
         const data = res.data
 
         if (!data?.status || !data.results?.length) {
-          await m.react('❌')
-          return m.reply('💙 No se encontraron resultados para tu búsqueda.', m, global.miku)
+          await m.react('💔')
+          return m.reply('✨ Aww... No encontré nada con eso~ Intenta de nuevo, ¿si? 💕', m, global.miku)
         }
 
-        let caption = `💙 *MEDIAFIRE SEARCH* 💙\n\n`
-        caption += `💙 *Resultados encontrados:* ${data.results.length}\n\n`
+        let caption = `✨💕 *BÚSQUEDA MARIN* 💕✨\n\n`
+        caption += `🌸 *¡Encontré ${data.results.length} resultaditos para ti~!* 🌸\n\n`
 
         data.results.forEach((r, i) => {
-          caption += `${i % 2 === 0 ? '💙' : '🌱'} *${i + 1}. Nombre:* ${r.filename}\n`
-          caption += `${i % 2 === 0 ? '🌱' : '💙'} *Peso:* ${r.filesize}\n`
-          caption += `${i % 2 === 0 ? '💙' : '🌱'} *Enlace:* ${r.url}\n`
-          caption += `${i % 2 === 0 ? '🌱' : '💙'} *Fuente:* ${r.source_title}\n\n`
+          caption += `${i % 2 === 0 ? '💖' : '🌸'} *${i + 1}. Nombre:* ${r.filename}\n`
+          caption += `${i % 2 === 0 ? '🌸' : '💖'} *Peso:* ${r.filesize}\n`
+          caption += `${i % 2 === 0 ? '💖' : '🌸'} *Enlace:* ${r.url}\n`
+          caption += `${i % 2 === 0 ? '🌸' : '💖'} *De:* ${r.source_title}\n\n`
         })
 
-        caption += `💙 *HATSUNE MIKU* 💙`
+        caption += `✨ *¡Elige lo que quieras, gatito~!* ✨`
 
-        await m.react('✅')
+        await m.react('💕')
         return m.reply(caption)
       }
 
       const scraped = await mediafireDl(text)
       if (!scraped?.downloadLink) {
-        await m.react('❌')
-        return m.reply('💙 El enlace ingresado es inválido.', m, global.miku)
+        await m.react('💔')
+        return m.reply('✨ Ese enlace no está funcionando, cariño~ Verifica que sea válido 💕', m, global.miku)
       }
 
       const title = (scraped.filename || 'archivo').trim()
       const ext = path.extname(title) || (scraped.type ? `.${scraped.type}` : '')
       const tipo = lookup((ext || '').toLowerCase()) || 'application/octet-stream'
 
-      const info = `💙🌱 *MEDIAFIRE DOWNLOAD* 🌱💙
+      const info = `✨💕 *DESCARGA MARIN* 💕✨
 
-💙 *Nombre:* ${title}
-🌱 *Tipo:* ${tipo}
-${scraped.size ? `💙 *Peso:* ${scraped.size}\n` : ''}${scraped.uploaded ? `🌱 *Subido:* ${scraped.uploaded}\n` : ''}
-💙 *HATSUNE MIKU* 💙`
+💖 *Archivo:* ${title}
+🌸 *Tipo:* ${tipo}
+${scraped.size ? `✨ *Tamaño:* ${scraped.size}\n` : ''}${scraped.uploaded ? `💕 *Subido:* ${scraped.uploaded}\n` : ''}
+🌸 *¡Te lo traigo con amor~!* ✨`
 
       await client.sendContextInfoIndex(m.chat, info, {}, m, true, null, {
         banner: 'https://i.pinimg.com/736x/0c/1e/f8/0c1ef8e804983e634fbf13df1044a41f.jpg',
-        title: '💙 Mediafire 🌱',
-        body: '✰ Descarga De MF',
+        title: '✨ Marin\'s Download 💕',
+        body: '🌸 Archivo Especial',
         redes: global.db.data.settings[client.user.id.split(':')[0] + '@s.whatsapp.net'].link
       })
 
@@ -76,17 +76,17 @@ ${scraped.size ? `💙 *Peso:* ${scraped.size}\n` : ''}${scraped.uploaded ? `�
         { quoted: m }
       )
       
-      await m.react('✅')
+      await m.react('💕')
     } catch (e) {
-      await m.react('❌')
+      await m.react('💔')
       return m.reply(
-        `💙 *ERROR* 🌱
+        `✨ *¡OOPS!* 💕
 
-💙 Ocurrió un error al ejecutar *${usedPrefix + command}*
+Algo salió mal en *${usedPrefix + command}*...
 
-🌱 *Error:* ${e.message}
+🌸 *Error:* ${e.message}
 
-💙 Inténtalo de nuevo o contacta soporte.`, m, global.miku
+💖 Intenta otra vez, ¿si? Cuento contigo~ ✨`, m, global.miku
       )
     }
   }
