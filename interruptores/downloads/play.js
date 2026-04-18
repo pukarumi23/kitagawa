@@ -262,22 +262,22 @@ function embedCoverArt(mp3Buffer, imageBuffer, title) {
 
 function getMikuMenuText(title, author, duration, views) {
   return (
-    `╭──『 *YOUTUBE PLAY* 』──╮\n` +
-    `│ 💙 *Hatsune Miku Edition* 💙\n` +
+    `╭──『 *DESCARGA MARIN* 』──╮\n` +
+    `│ ✨💕 *Marin Kitagawa Edition* 💕✨\n` +
     `╰────────────────╯\n\n` +
     `🎬 *${String(title).substring(0, 35)}*\n` +
     (author   ? `👤 ${author}\n`                   : '') +
     (duration ? `⏱️ ${duration}\n`                 : '') +
     (views    ? `👁️ ${formatViews(views)} vistas\n` : '') +
     `\n` +
-    `『 *¿Qué deseas descargar?* 』\n\n` +
-    `1️⃣ *🌱 Audio MP3*\n` +
-    `2️⃣ *🌱 Video 360p*\n` +
-    `3️⃣ *🌱 Documento MP4*\n` +
-    `4️⃣ *🌱 Documento MP3*\n\n` +
+    `『 *¿Qué quieres descargar, cariño~?* 』\n\n` +
+    `1️⃣ *🎵 Audio MP3*\n` +
+    `2️⃣ *🎬 Video 360p*\n` +
+    `3️⃣ *📁 Documento MP4*\n` +
+    `4️⃣ *📄 Documento MP3*\n\n` +
     `────────────────────\n` +
-    `_▸ Responde con el numero (1-4)_\n` +
-    `_▸ Expira en 5 minutos_\n` +
+    `_▸ Responde con el número (1-4)_\n` +
+    `_▸ Expira en 5 minutos~_\n` +
     `_▸ Costo: 🌱 500 Cebollines_`
   )
 }
@@ -291,11 +291,11 @@ function deleteFile(filePath) {
 export async function processDownload(conn, m, videoInfo, option) {
   const lockKey = m.chat
   if (activeYouTubeDownloads.has(lockKey)) {
-    await conn.reply(m.chat, '⏳ Ya hay una descarga en curso en este chat. Espera a que termine.', m)
+    await conn.reply(m.chat, '✨ Ya hay una descarga en curso en este chat~ Espera a que termine, cariño 💕', m)
     return false
   }
   activeYouTubeDownloads.set(lockKey, { startedAt: Date.now(), sender: m.sender })
-  await conn.sendMessage(m.chat, { react: { text: '⏳', key: m.key } })
+  await conn.sendMessage(m.chat, { react: { text: '✨', key: m.key } })
   const isAudio    = option === 1 || option === 4
   const asDocument = option === 3 || option === 4
   const fileName   = String(videoInfo.title || 'descarga').replace(/[^\w\s]/gi, '').trim().substring(0, 50) || 'descarga'
@@ -341,18 +341,18 @@ export async function processDownload(conn, m, videoInfo, option) {
         caption: `🎬 ${videoInfo.title}`,
       }, { quoted: m })
     }
-    await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
+    await conn.sendMessage(m.chat, { react: { text: '💕', key: m.key } })
     const user = global.db?.data?.users?.[m.sender]
     if (user && !user.monedaDeducted) {
       user.moneda = (user.moneda || 0) - 500
       user.monedaDeducted = true
-      conn.reply(m.chat, '💙 Has utilizado 🌱 500 *Cebollines*', m)
+      conn.reply(m.chat, '💖 Has utilizado 🌱 500 *Cebollines*~ ¡Gracias, cariño! 💕', m)
     }
     return true
   } catch (error) {
     if (tempFilePath) deleteFile(tempFilePath)
-    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-    await conn.reply(m.chat, `💙 Error al descargar: ${error.message}`, m)
+    await conn.sendMessage(m.chat, { react: { text: '💔', key: m.key } })
+    await conn.reply(m.chat, `🌸 Error al descargar: ${error.message}`, m)
     throw error
   } finally {
     activeYouTubeDownloads.delete(lockKey)
@@ -370,11 +370,11 @@ export async function processYouTubeButton(conn, m) {
   if (!option) return false
   const user = global.db?.data?.users?.[m.sender]
   if (!user?.lastYTSearch) {
-    await conn.reply(m.chat, '⏰ No hay búsqueda activa. Realiza una nueva búsqueda.', m)
+    await conn.reply(m.chat, '⏰ No hay búsqueda activa~ Realiza una nueva búsqueda, ¿si? 💕', m)
     return false
   }
   if (Date.now() - (user.lastYTSearch.timestamp || 0) > 10 * 60 * 1000) {
-    await conn.reply(m.chat, '⏰ La búsqueda expiró. Realiza una nueva búsqueda.', m)
+    await conn.reply(m.chat, '⏰ La búsqueda expiró, cariño~ Haz una nueva, ¿si? 💕', m)
     return false
   }
   user.monedaDeducted = false
@@ -408,10 +408,10 @@ export default {
         if (option) {
           const user = global.db?.data?.users?.[m.sender]
           if (!user?.lastYTSearch) {
-            return conn.reply(m.chat, '⏰ No hay búsqueda activa. Realiza una nueva búsqueda.', m)
+            return conn.reply(m.chat, '⏰ No hay búsqueda activa~ Realiza una nueva búsqueda, ¿si? 💕', m)
           }
           if (Date.now() - (user.lastYTSearch.timestamp || 0) > 10 * 60 * 1000) {
-            return conn.reply(m.chat, '⏰ La búsqueda expiró. Realiza una nueva búsqueda.', m)
+            return conn.reply(m.chat, '⏰ La búsqueda expiró, cariño~ Haz una nueva, ¿si? 💕', m)
           }
           user.monedaDeducted = false
           try {
@@ -430,9 +430,9 @@ export default {
       if (!args.length) {
         return conn.reply(
           m.chat,
-          `💙 *${usedPrefix}${command}* <canción o URL>\n` +
-          `💙 Ejemplo: *${usedPrefix}${command} Let you down Cyberpunk*\n` +
-          `💙 Costo: *🌱 500 cebollines*`,
+          `✨💕 *${usedPrefix}${command}* <canción o URL>\n` +
+          `💖 Ejemplo: *${usedPrefix}${command} Let you down Cyberpunk*\n` +
+          `🌸 Costo: *🌱 500 cebollines*`,
           m
         )
       }
@@ -447,8 +447,8 @@ export default {
         const result = await yts(query)
         const video  = result?.videos?.[0]
         if (!video) {
-          await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-          return conn.reply(m.chat, '❌ No se encontraron resultados.', m)
+          await conn.sendMessage(m.chat, { react: { text: '💔', key: m.key } })
+          return conn.reply(m.chat, '🌸 Aww... No encontré nada con eso~ Intenta otra búsqueda, ¿si? 💕', m)
         }
         videoUrl       = video.url
         videoTitle     = video.title
@@ -480,7 +480,7 @@ export default {
         await conn.reply(m.chat, infoText, m)
       }
     } catch (error) {
-      await conn.reply(m.chat, `❌ Error: ${error.message}`, m)
+      await conn.reply(m.chat, `✨ *¡OOPS!* 💕\n\nError: ${error.message}`, m)
     }
   },
 }
