@@ -363,7 +363,7 @@ async function getTikTokImages(url) {
   const normalized = normalizeTikTokData(data)
 
   if (normalized.images.length === 0) {
-    throw new Error('Este TikTok no tiene imágenes, usa *.tt* para descargarlo como video.')
+    throw new Error('Este TikTok no tiene imágenes... ¡usa *.tt* para bajarlo como video, anda~! 🎬')
   }
 
   return { normalized, raw: data }
@@ -394,7 +394,7 @@ function formatCaption(data) {
   const shares = (data?.stats?.shares || 0).toLocaleString()
   return (
     `╭───────────────╮\n` +
-    `│ 💙 *TIKTOK*\n` +
+    `│ 🎀 *TIKTOK*\n` +
     `│───────────────\n` +
     `│ 📌 ${(data?.title || 'Sin titulo').substring(0, 60)}\n` +
     `│ 👤 ${data?.author?.nickname || 'Desconocido'}\n` +
@@ -493,7 +493,7 @@ async function sendVideoWithFallback(conn, chat, m, videoCandidates, caption) {
           document: downloaded.buffer,
           mimetype: 'video/mp4',
           fileName: candidate.isHd ? 'tiktok-hd.mp4' : 'tiktok.mp4',
-          caption: `${caption}\n\n📎 Enviado como documento por problemas de compatibilidad`,
+          caption: `${caption}\n\n📎 Lo mandé como documento porque si no no jalaba~ ¡igual se ve bien! ✨`,
         },
         { quoted: m }
       )
@@ -507,7 +507,7 @@ async function sendVideoWithFallback(conn, chat, m, videoCandidates, caption) {
 
   if (!videoSent) {
     if (lastError) throw lastError
-    throw new Error('No se pudo enviar un video compatible')
+    throw new Error('No pude mandar un video compatible... ¡qué frustrante! 😤')
   }
 }
 
@@ -558,7 +558,7 @@ async function sendImagesWithFallback(conn, chat, m, images, caption) {
     caption: index === 0 ? caption : '',
   }))
 
-  if (medias.length === 0) throw new Error('No se encontraron imagenes validas')
+  if (medias.length === 0) throw new Error('No encontré imágenes válidas... ¡qué raro! 🤔')
 
   try {
     if (medias.length === 1) {
@@ -576,7 +576,7 @@ async function sendImagesWithFallback(conn, chat, m, images, caption) {
     downloaded.push(file.buffer)
   }
 
-  if (downloaded.length === 0) throw new Error('No se pudieron descargar las imagenes')
+  if (downloaded.length === 0) throw new Error('¡No pude descargar las imágenes! Intenta de nuevo~ 🥺')
 
   if (downloaded.length === 1) {
     await conn.sendMessage(chat, { image: downloaded[0], caption }, { quoted: m })
@@ -604,7 +604,7 @@ function getSearchVideoCandidates(video) {
 
 async function sendImagesCarousel(conn, m, images, caption) {
   const list = images.slice(0, 6)
-  if (!list.length) throw new Error('No se encontraron imágenes para el carrusel')
+  if (!list.length) throw new Error('No encontré imágenes para el carrusel~ 😢')
 
   const cards = []
   for (const url of list) {
@@ -653,7 +653,7 @@ async function sendImagesCarousel(conn, m, images, caption) {
 
 async function _xV(conn, m, entries = []) {
   const list = entries.slice(0, 6)
-  if (!list.length) throw new Error('No se encontraron videos para enviar')
+  if (!list.length) throw new Error('No encontré videos para mostrar~ 😢')
 
   const cards = []
   for (const { meta, selected } of list) {
@@ -667,7 +667,7 @@ async function _xV(conn, m, entries = []) {
       const title = String(meta?.title || 'Sin titulo').replace(/\s+/g, ' ').slice(0, 64)
       cards.push({
         body: proto.Message.InteractiveMessage.Body.fromObject({
-          text: `💙 ${title}`,
+          text: `🎀 ${title}`,
         }),
         footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: '' }),
         header: proto.Message.InteractiveMessage.Header.fromObject({
@@ -680,7 +680,7 @@ async function _xV(conn, m, entries = []) {
     } catch {}
   }
 
-  if (!cards.length) throw new Error('No se pudo construir carrusel de videos')
+  if (!cards.length) throw new Error('No pude armar el carrusel de videos... ¡qué molestia! 😤')
 
   const msg = generateWAMessageFromContent(
     m.chat,
@@ -688,7 +688,7 @@ async function _xV(conn, m, entries = []) {
       viewOnceMessage: {
         message: {
           interactiveMessage: proto.Message.InteractiveMessage.fromObject({
-            body: proto.Message.InteractiveMessage.Body.create({ text: '💙 Resultados TikTok' }),
+            body: proto.Message.InteractiveMessage.Body.create({ text: '🎀 ¡Mira lo que encontré en TikTok~!' }),
             footer: proto.Message.InteractiveMessage.Footer.create({ text: '' }),
             header: proto.Message.InteractiveMessage.Header.create({ hasMediaAttachment: false }),
             carouselMessage: proto.Message.InteractiveMessage.CarouselMessage.fromObject({ cards }),
@@ -711,8 +711,9 @@ export default {
     if (!args.length) {
       return conn.reply(
         m.chat,
-        `Uso: *${usedPrefix}${command}* <enlace o busqueda>\n\n` +
-        `Ejemplo:\n` +
+        `¡Eeh~! ¿Olvidaste el enlace? 🎀 Así se usa:\n\n` +
+        `*${usedPrefix}${command}* <enlace o búsqueda>\n\n` +
+        `Por ejemplo:\n` +
         `• ${usedPrefix}tt https://vm.tiktok.com/xxx\n` +
         `• ${usedPrefix}ttsearch gato gracioso\n` +
         `• ${usedPrefix}tiktokimg https://vm.tiktok.com/xxx\n` +
@@ -732,9 +733,9 @@ export default {
     if ((isDownloadCommand || isImageCommand || isMp3Command) && !isUrl) {
       return conn.reply(
         m.chat,
-        `💙 *Uso correcto*\n\n` +
-        `• ${usedPrefix}${currentCommand} <enlace tiktok>\n` +
-        `• ${usedPrefix}ttsearch <texto>`,
+        `¡Eso no parece un enlace de TikTok~ 🎀\n\n` +
+        `• ${usedPrefix}${currentCommand} <enlace de tiktok>\n` +
+        `• ${usedPrefix}ttsearch <lo que quieras buscar>`,
         m
       )
     }
@@ -742,8 +743,8 @@ export default {
     if (isSearchCommand && isUrl) {
       return conn.reply(
         m.chat,
-        `💙 Ese comando es solo para buscar.\n` +
-        `Usa *${usedPrefix}tt* para enlaces directos.`,
+        `¡Ese comando es solo para buscar, no para enlaces~ 🎀\n` +
+        `Usa *${usedPrefix}tt* si tienes un enlace directo, ¡anda!`,
         m
       )
     }
@@ -757,7 +758,7 @@ export default {
 
         if (validImages.length === 0) {
           await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-          return conn.reply(m.chat, '💙 No se encontraron imágenes en ese TikTok.\nQuizás es un video, usa *.tt* para descargarlo.', m)
+          return conn.reply(m.chat, '¡No encontré imágenes en ese TikTok~ 🎀 Quizás es un video, ¡usa *.tt* para descargarlo!', m)
         }
 
         const caption = formatCaption(normalized)
@@ -806,7 +807,7 @@ export default {
           }
         }
 
-        if (!audioSent) throw new Error('No se pudo descargar el audio')
+        if (!audioSent) throw new Error('¡No pude descargar el audio! Qué fastidio~ 😤')
 
         await conn.reply(m.chat, caption, m)
         await conn.sendMessage(m.chat, { react: { text: '✅', key: m.key } })
@@ -825,7 +826,7 @@ export default {
           await sendImagesWithFallback(conn, m.chat, m, validImages, caption)
           await sendAudioIfAvailable(conn, m.chat, m, media.audio)
         } else {
-          if (playableVideos.length === 0) throw new Error('No se encontro video descargable')
+          if (playableVideos.length === 0) throw new Error('¡No encontré ningún video descargable~ 😢')
           await sendVideoWithFallback(conn, m.chat, m, playableVideos, caption)
         }
 
@@ -838,7 +839,7 @@ export default {
 
       if (videos.length === 0) {
         await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-        return conn.reply(m.chat, '💙 No se encontraron resultados.', m)
+        return conn.reply(m.chat, '¡No encontré resultados para eso~ 🎀 ¡Prueba con otras palabras!', m)
       }
 
       const seenIds = new Set()
@@ -881,7 +882,7 @@ export default {
 
       if (valid.length === 0) {
         await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-        return conn.reply(m.chat, '💙 No se encontraron videos validos.', m)
+        return conn.reply(m.chat, '¡No encontré videos válidos~ 😢 ¡Intenta con otra búsqueda!', m)
       }
 
       await _xV(conn, m, valid)
@@ -890,7 +891,7 @@ export default {
     } catch (e) {
       console.error('Error en tiktok:', e.message)
       await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
-      await conn.reply(m.chat, `💙 Error: ${e.message}`, m)
+      await conn.reply(m.chat, `¡Aaah, algo salió mal~ 😤 ${e.message}`, m)
     }
   },
 }
