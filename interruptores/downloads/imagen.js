@@ -6,7 +6,7 @@ export default {
   run: async (client, m, args, usedPrefix, command) => {
     const text = args.join(' ')
     if (!text) {
-      return client.reply(m.chat, `🌸 Por favor, ingresa un término de búsqueda.`, m, global.miku)
+      return client.reply(m.chat, `✨💕 Ehh~ ¿Qué quieres buscar, cariño~? Dame un término, ¿si? 💕✨`, m, global.miku)
     }
     const bannedWords = [
   '+18', '18+', 'contenido adulto', 'contenido explícito', 'contenido sexual',
@@ -41,7 +41,7 @@ export default {
     const lowerText = text.toLowerCase()
     const nsfwEnabled = global.db.data.chats[m.chat]?.nsfw === true
     if (!nsfwEnabled && bannedWords.some(word => lowerText.includes(word))) {
-      return m.reply('🌸 Este comando no *permite* búsquedas de contenido *+18* o *NSFW*', m, global.miku)
+      return m.reply('💔 Aww~ Ese contenido no está permitido aquí, cariño~ Solo búsquedas limpias, ¿si? 💕', m, global.miku)
     }
     try {
       const results = await getImageSearchResults(text)
@@ -54,21 +54,21 @@ export default {
         }
       }
       if (checked.length < 2) {
-        return client.reply(m.chat, `🌸 Se requieren al menos 2 imágenes válidas para mostrar un álbum.`, m, global.miku)
+        return client.reply(m.chat, `🌸 Necesito al menos 2 imágenes para hacerte un álbum bonito~ Intenta otra búsqueda, ¿si? 💕`, m, global.miku)
       }
       const medias = checked.slice(0, 10).map(r => ({
         type: 'image',
         data: { url: r.url },
-        caption: `🌸✨ *GOOGLE IMAGE SEARCH* ✨🌸\n━━━━━━━━━━━━━━━━━━━━\n` +
-          `${r.title ? `🎀 *Título* › ${r.title}\n` : ''}` +
-          `${r.domain ? `💻 *Fuente* › ${r.domain}\n` : ''}` +
-          `${r.resolution ? `🖼️ *Resolución* › ${r.resolution}\n` : ''}` +
+        caption: `✨💕 *BÚSQUEDA MARIN* 💕✨\n━━━━━━━━━━━━━━━━━━━━\n` +
+          `${r.title ? `💖 *Título* › ${r.title}\n` : ''}` +
+          `${r.domain ? `🌸 *Fuente* › ${r.domain}\n` : ''}` +
+          `${r.resolution ? `🎀 *Resolución* › ${r.resolution}\n` : ''}` +
           `🔍 *Búsqueda* › ${text}\n` +
-          `━━━━━━━━━━━━━━━━━━━━\n*「 ¡Encontrado, senpai~! 💕 」*`
+          `━━━━━━━━━━━━━━━━━━━━\n*「 ¡Te lo traigo con amor~! 💕 」*`
       }))
       await client.sendAlbumMessage(m.chat, medias, { quoted: m })
     } catch (e) {
-      await m.reply(`🌸 *ERROR*\n\nOcurrió un error al ejecutar *${usedPrefix + command}*. Intenta de nuevo~\n> [Error: *${e.message}*]`)
+      await m.reply(`✨ *¡OOPS!* 💕\n\nAlgo salió mal en *${usedPrefix + command}*~ Intenta de nuevo, ¿si?\n> [Error: *${e.message}*]`)
     }
   }
 }
