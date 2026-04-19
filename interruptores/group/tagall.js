@@ -7,20 +7,17 @@ export default {
     const participants = groupInfo.participants
     const pesan = args.join(' ')
     let teks =
-      `🩵 💙 ꒰ *HATSUNE MIKU* ꒱ 💙🩵\n` +
-      `🎵 初音ミク • *VOCALOID* • ミクミク 🎵\n\n` +
-      `🌊💙 *${pesan || '『 Miku Miku ni Shite Ageru~ 』'}* 💙🌊\n\n` +
-      `🎧 *Miembros:* ${participants.length} 👥\n` +
-      `🎀 *Solicitado por:* @${m.sender.split('@')[0]} ✨\n\n` +
-      `╭✦ ꒰ 🩵🎤 *Lista de Usuarios* 🎤🩵 ꒱ ✦╮\n`
-
+      `✨💕 ꒰ *MARIN KITAGAWA* ꒱ 💕✨\n` +
+      `🎀 Cosplay • *PERSONAJE* • Protagonista 🎀\n\n` +
+      `🌸💖 *${pesan || '『 ¡Ehh~ ¡Todos aquí, cariño~! 』'}* 💖🌸\n\n` +
+      `🎵 *Miembros Presentes:* ${participants.length} 👥\n` +
+      `💕 *Convocado por:* @${m.sender.split('@')[0]} ✨\n\n` +
+      `╭✦ ꒰ 💕🎀 *Lista de Usuarios* 🎀💕 ꒱ ✦╮\n`
     for (const mem of participants) {
-      teks += `│ 🩵🎵 @${mem.id.split('@')[0]}\n`
+      teks += `│ ✨💕 @${mem.id.split('@')[0]}\n`
     }
-
     teks += `╰✦──────────────────✦╯\n` +
-      `💙✨ *39!* • ミクミク • 初音ミク ✨💙`
-
+      `🌸💖 *¡Te cuento con todos, cariño!* • Marin Mode • ¡Aquí vamos! 💖🌸`
     return client.reply(m.chat, teks, m, { mentions: [m.sender, ...participants.map(p => p.id)] })
   }
 }
