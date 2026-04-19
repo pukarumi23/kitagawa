@@ -27,7 +27,7 @@ global.miku = {
       mediaUrl: null,
       description: '🌱Lo mejor🌿',
       previewType: "PHOTO",
-      thumbnailUrl: global.banner || 'https://i.pinimg.com/736x/a6/bc/e0/a6bce0a408b2ec6037cabafc67afeadb.jpg',
+      thumbnailUrl: global.banner || 'https://i.pinimg.com/736x/72/57/af/7257af51d06b3d917d89ff0a40f880dc.jpg',
       sourceUrl: global.channel || 'https://whatsapp.com/channel/0029VbC04aQ6mYPDkbiMte0u',
       mediaType: 1,
       renderLargerThumbnail: false
