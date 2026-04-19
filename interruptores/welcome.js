@@ -70,10 +70,10 @@ export default async function welcomeHandler(client) {
           forwardedNewsletterMessageInfo: {
             newsletterJid: botSettings.id || '120363315369913363@newsletter',
             serverMessageId: '0',
-            newsletterName: botSettings.nameid || 'kitagawa bot chanel'
+            newsletterName: botSettings.nameid || '🧡KITAGAWA🧡'
           },
           externalAdReply: {
-            title: botSettings.namebot || 'MARIN KITAGAWA',
+            title: botSettings.namebot || 'KITAGAWA',
             body: global.dev || '© 🄿🄾🅆🄴🅁🄴🄳 CHASKI',
             mediaUrl: null,
             description: null,
