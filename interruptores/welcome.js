@@ -8,28 +8,24 @@ export default async function welcomeHandler(client) {
 
   client.ev.on('group-participants.update', async (anu) => {
     try {
-      
       if (!anu || !anu.id || !anu.participants || !Array.isArray(anu.participants)) {
         return;
       }
 
-    
-      if (client.ws?.socket?.readyState !== 1) {
-        return;
-      }
+      // Log de debug
+      console.log(chalk.cyan(`✨ Evento detectado: ${anu.action} en ${anu.id}`));
 
-     
       let metadata = {};
       try {
         const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), 3000)
+          setTimeout(() => reject(new Error('Timeout obteniendo metadata')), 5000)
         );
         metadata = await Promise.race([
           client.groupMetadata(anu.id),
           timeoutPromise
         ]);
       } catch (err) {
-        
+        console.log(chalk.yellow(`⚠️ No se pudo obtener metadata: ${err.message}`));
         metadata = { subject: 'Grupo', participants: [] };
       }
 
@@ -39,25 +35,22 @@ export default async function welcomeHandler(client) {
       const botSettings = global.db.data.settings[botId] || {};
       
       for (const jid of participants) {
-        
         let validJid = jid;
-        
         
         if (typeof jid === 'object' && jid !== null) {
           validJid = jid.phoneNumber || jid.id || jid;
         }
         
-        
         if (typeof validJid === 'number') {
           validJid = `${validJid}@s.whatsapp.net`;
         }
-        
         
         if (typeof validJid === 'string' && !validJid.includes('@')) {
           validJid = `${validJid}@s.whatsapp.net`;
         }
         
         if (!validJid || typeof validJid !== 'string' || !validJid.includes('@')) {
+          console.log(chalk.yellow(`⚠️ JID inválido: ${JSON.stringify(jid)}`));
           continue;
         }
         
@@ -113,11 +106,10 @@ export default async function welcomeHandler(client) {
               caption,
               contextInfo
             });
-            console.log(chalk.green(`✨💕 Bienvenida enviada a ${phone}`));
+            console.log(chalk.green(`✨💕 Bienvenida enviada a ${phone} en ${metadata.subject}`));
           } catch (err) {
-            
             if (!err.message?.includes('Connection') && !err.message?.includes('Timeout')) {
-              console.log(chalk.yellow(`✨ Welcome: Error enviando bienvenida - ${err.message}`));
+              console.log(chalk.red(`❌ Welcome: Error enviando bienvenida a ${phone} - ${err.message}`));
             }
           }
         }
@@ -142,17 +134,15 @@ export default async function welcomeHandler(client) {
               caption,
               contextInfo
             });
-            console.log(chalk.blue(`✨💕 Despedida enviada a ${phone}`));
+            console.log(chalk.blue(`✨💕 Despedida enviada a ${phone} en ${metadata.subject}`));
           } catch (err) {
-            
             if (!err.message?.includes('Connection') && !err.message?.includes('Timeout')) {
-              console.log(chalk.yellow(`✨ Welcome: Error enviando despedida - ${err.message}`));
+              console.log(chalk.red(`❌ Welcome: Error enviando despedida a ${phone} - ${err.message}`));
             }
           }
         }
       }
     } catch (err) {
-     
       if (!err.message?.includes('Connection Closed') && !err.message?.includes('Timeout')) {
         console.log(chalk.gray(`✨ Welcome Error → ${err.message}`));
       }
