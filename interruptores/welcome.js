@@ -63,7 +63,7 @@ export default async function welcomeHandler(client) {
         
         const phone = validJid.split('@')[0];
         
-        let pp = 'https://i.pinimg.com/736x/0c/1e/f8/0c1ef8e804983e634fbf13df1044a41f.jpg';
+        let pp = 'https://i.pinimg.com/736x/5a/9e/08/5a9e08a474b04a4b4574b9172931aaed.jpg';
         try {
           pp = await client.profilePictureUrl(validJid, 'image');
         } catch {
@@ -77,16 +77,16 @@ export default async function welcomeHandler(client) {
           forwardedNewsletterMessageInfo: {
             newsletterJid: botSettings.id || '120363315369913363@newsletter',
             serverMessageId: '0',
-            newsletterName: botSettings.nameid || '💙 HATSUNE MIKU CHANNEL💙'
+            newsletterName: botSettings.nameid || 'kitagawa bot chanel'
           },
           externalAdReply: {
-            title: botSettings.namebot || 'HATSUNE MIKU',
-            body: global.dev || '© 🄿🄾🅆🄴🅁🄴🄳 (ㅎㅊDEPOOLㅊㅎ)',
+            title: botSettings.namebot || 'MARIN KITAGAWA',
+            body: global.dev || '© 🄿🄾🅆🄴🅁🄴🄳 CHASKI',
             mediaUrl: null,
             description: null,
             previewType: 'PHOTO',
-            thumbnailUrl: botSettings.icon || 'https://i.pinimg.com/736x/30/42/b8/3042b89ced13fefda4e75e3bc6dc2a57.jpg',
-            sourceUrl: botSettings.link || 'https://www.whatsapp.com/channel/0029VajYamSIHphMAl3ABi1o',
+            thumbnailUrl: botSettings.icon || 'https://i.pinimg.com/736x/2b/95/90/2b95906e63e51d846a3a203c07b1c6de.jpg',
+            sourceUrl: botSettings.link || 'https://whatsapp.com/channel/0029VbC04aQ6mYPDkbiMte0u',
             mediaType: 1,
             renderLargerThumbnail: false
           },
@@ -95,58 +95,58 @@ export default async function welcomeHandler(client) {
         
         if (anu.action === 'add') {
           try {
-            const caption = `╭━━━🌸━━━💙━━━🌸━━━╮
-┃  🎵 *¡ Bienvenid${phone.endsWith('a') ? 'a' : 'o'} al grupo !* 🎵
-╰━━━🌸━━━💙━━━🌸━━━╯
+            const caption = `╭━━━✨━━━💕━━━✨━━━╮
+┃  🎵 *¡ Ehh~ ¡Bienvenid${phone.endsWith('a') ? 'a' : 'o'}! 💕* 🎵
+╰━━━✨━━━💕━━━✨━━━╯
 │
-├◦ 🌸 *Usuario* ⟶ @${phone}
-├◦ 💙 *Grupo* ⟶ ${metadata.subject || 'Grupo'}
-├◦ 🌱 *Miembros* ⟶ Ahora somos ${memberCount}
+├◦ ✨ *Usuario* ⟶ @${phone}
+├◦ 💕 *Grupo* ⟶ ${metadata.subject || 'Grupo'}
+├◦ 🌸 *Miembros* ⟶ Ahora somos ${memberCount}
 │
 ├━━━━━━━━━━━━━━━━━━╮
-│ 🌱 Usa */menu* para ver comandos.
-│ 💙 ¡Que disfrutes tu estancia! ✨
-╰━━━🌸━━━💙━━━🌸━━━╯`;
+│ 💖 Usa */menu* para ver comandos.
+│ 🌸 ¡Que disfrutes tu estancia, cariño~! ✨
+╰━━━✨━━━💕━━━✨━━━╯`;
             
             await client.sendMessage(anu.id, { 
               image: { url: pp }, 
               caption,
               contextInfo
             });
-            console.log(chalk.green(`💙 Bienvenida enviada a ${phone}`));
+            console.log(chalk.green(`✨💕 Bienvenida enviada a ${phone}`));
           } catch (err) {
             
             if (!err.message?.includes('Connection') && !err.message?.includes('Timeout')) {
-              console.log(chalk.yellow(`💙 Welcome: Error enviando bienvenida - ${err.message}`));
+              console.log(chalk.yellow(`✨ Welcome: Error enviando bienvenida - ${err.message}`));
             }
           }
         }
         
         if (anu.action === 'remove' || anu.action === 'leave') {
           try {
-            const caption = `╭━━━🌸━━━💙━━━🌸━━━╮
-┃  🎵 *¡ Hasta pronto !* 🎵
-╰━━━🌸━━━💙━━━🌸━━━╯
+            const caption = `╭━━━✨━━━💕━━━✨━━━╮
+┃  🎵 *¡ Aww~ ¡Hasta luego, cariño! 💕* 🎵
+╰━━━✨━━━💕━━━✨━━━╯
 │
-├◦ 🌸 *Usuario* ⟶ @${phone}
-├◦ 💙 *Grupo* ⟶ ${metadata.subject || 'Grupo'}
-├◦ 🌱 *Miembros* ⟶ Ahora somos ${memberCount}
+├◦ ✨ *Usuario* ⟶ @${phone}
+├◦ 💕 *Grupo* ⟶ ${metadata.subject || 'Grupo'}
+├◦ 🌸 *Miembros* ⟶ Ahora somos ${memberCount}
 │
 ├━━━━━━━━━━━━━━━━━━╮
-│ 🌸 Fue un placer tenerte aquí.
-│ 💙 ¡Esperamos verte de nuevo! ✨
-╰━━━🌸━━━💙━━━🌸━━━╯`;
+│ 🌸 Fue un placer tenerte aquí, gatito~
+│ 💖 ¡Espero verte de nuevo pronto! ✨
+╰━━━✨━━━💕━━━✨━━━╯`;
             
             await client.sendMessage(anu.id, { 
               image: { url: pp }, 
               caption,
               contextInfo
             });
-            console.log(chalk.blue(`💙 Despedida enviada a ${phone}`));
+            console.log(chalk.blue(`✨💕 Despedida enviada a ${phone}`));
           } catch (err) {
             
             if (!err.message?.includes('Connection') && !err.message?.includes('Timeout')) {
-              console.log(chalk.yellow(`💙 Welcome: Error enviando despedida - ${err.message}`));
+              console.log(chalk.yellow(`✨ Welcome: Error enviando despedida - ${err.message}`));
             }
           }
         }
@@ -154,7 +154,7 @@ export default async function welcomeHandler(client) {
     } catch (err) {
      
       if (!err.message?.includes('Connection Closed') && !err.message?.includes('Timeout')) {
-        console.log(chalk.gray(`💙 Welcome Error → ${err.message}`));
+        console.log(chalk.gray(`✨ Welcome Error → ${err.message}`));
       }
     }
   });
