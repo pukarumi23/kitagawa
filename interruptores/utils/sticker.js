@@ -12,44 +12,44 @@ export default {
       ensureTmp()
 
       if (args[0] === '-list') {
-        const helpText = `💙 Lista de Formas y Efectos Disponibles para *imagen*:
+        const helpText = `✨ ¡Kyaaaa~! ¡Mira todas las formas y efectos que puedo hacer para ti, senpai~! 🎀
 
 ✦ *Formas:*
-- -c : Crea un sticker circular
-- -t : Crea un sticker triangular
-- -s : Crea un sticker con forma de estrella
-- -r : Crea un sticker con esquinas redondeadas
-- -h : Crea un sticker hexagonal
-- -d : Crea un sticker con forma de diamante
-- -f : Crea un sticker con un marco
-- -b : Crea un sticker con un borde
-- -w : Crea un sticker con forma de onda
-- -m : Crea un sticker espejado
-- -o : Crea un sticker octogonal
-- -y : Crea un sticker pentagonal
-- -e : Crea un sticker elíptico
-- -z : Crea un sticker en forma de cruz
-- -v : Crea un sticker con forma de corazón
-- -x : Crea un sticker expandido (cover)
-- -i : Crea un sticker expandido (contain)
+- -c : ¡Un sticker redondito y kawaii~ 🔵
+- -t : ¡Forma triangular, como las onigiri! 🔺
+- -s : ¡Una estrellita brillante, igual que yo~! ⭐
+- -r : ¡Esquinas redondeadas, súper tierno~! 🟦
+- -h : ¡Hexagonal, como los panales de abeja! 🔷
+- -d : ¡Forma de diamante, ¡porque eres una joya~! 💎
+- -f : ¡Con un marquito para que quede más cute~! 🖼️
+- -b : ¡Un bordecito adorable~! 🎀
+- -w : ¡Forma de onda, como mi energía~! 🌊
+- -m : ¡Espejado, ¡como mi reflejo~! 🪞
+- -o : ¡Octogonal, ¡qué original~! ⬡
+- -y : ¡Pentagonal, ¡súper único~! ⭐
+- -e : ¡Elíptico, qué elegante~! ⬭
+- -z : ¡En forma de cruz, ¡woah~! ✚
+- -v : ¡De corazón, porque te quiero mucho~! 💖
+- -x : ¡Expandido full cover, ¡épico~! 🖼️
+- -i : ¡Expandido contain, sin perder nada~! 📐
 
 ✧ *Efectos:*
-- -blur : Aplica un efecto de desenfoque
-- -sepia : Aplica un efecto sepia
-- -sharpen : Aplica un efecto de nitidez
-- -brighten : Aumenta el brillo
-- -darken : Disminuye el brillo
-- -invert : Invierte los colores
-- -grayscale : Aplica escala de grises
-- -rotate90 : Rota la imagen 90 grados
-- -rotate180 : Rota la imagen 180 grados
-- -flip : Invierte la imagen horizontalmente
-- -flop : Invierte la imagen verticalmente
-- -normalice : Normaliza la imagen
-- -negate : Negatiza la imagen
-- -tint : Aplica un tinte de color a la imagen (rojo por defecto)
+- -blur : ¡Desenfocado, como en los shojo manga~! 🌸
+- -sepia : ¡Vintage y romántico, ¡me encanta~! 📷
+- -sharpen : ¡Súper nítido, como mis ojos brillantes~! 👁️
+- -brighten : ¡Más brillante, ¡como mi sonrisa~! ☀️
+- -darken : ¡Más oscurito, ¡qué dramático~! 🌙
+- -invert : ¡Colores invertidos, ¡wooow~! 🌈
+- -grayscale : ¡Blanco y negro, como en los mangas clásicos~! 🖤
+- -rotate90 : ¡Girado 90°, ¡mareante pero cute~! 🔄
+- -rotate180 : ¡Al revés, ¡como cuando me emociono~! 🙃
+- -flip : ¡Espejo horizontal, ¡qué divertido~! ↔️
+- -flop : ¡Espejo vertical, ¡woah~! ↕️
+- -normalice : ¡Colores normalizados, ¡perfecto~! ✨
+- -negate : ¡Negativo total, ¡qué loco~! 😵
+- -tint : ¡Con un tinte rojito, ¡como cuando me ruborizo~! 🌹
 
-> Ejemplo: *${usedPrefix + command} -c -blur Pack • Autor*`
+> ¡Ejemplo, senpai~!: *${usedPrefix + command} -c -blur Pack • Autor* 💕`
         return client.reply(m.chat, helpText, m)
       }
 
@@ -61,12 +61,10 @@ export default {
       const botname = client.user?.name || ''
       const fecha = new Date().toLocaleDateString('es-PE')
       const tiempo = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
-      const texto1 = user.metadatos || `💙━━━✦✧✦━━━💙
-🎤 Usuario: ${name}
-🤖 Bot: ${botname}
-📅 Fecha: ${fecha}
-⏰ Hora: ${tiempo}
-💙━━━✦✧✦━━━💙`
+      const texto1 = user.metadatos || `✦💖✦ ${name} ✦💖✦
+┊📅 ${fecha}  ⏰ ${tiempo}
+┊🤖 ${botname}
+╰─❀ ¡hecho con amor~! ❀`
 
       const { urlArg, picked, marca } = parseArgs(args)
 
@@ -112,7 +110,7 @@ export default {
         const animated = isAnimatedWebpBuffer(buffer)
         if (animated) {
           if (picked.length) {
-            return client.reply(m.chat, '💙 No puedo aplicar formas/efectos a stickers WEBP animados con ffmpeg en este método. Envíalo como imagen o usa /s sin flags.', m, global.miku)
+            return client.reply(m.chat, '💖 ¡Kyaa~! ¡Lo siento mucho senpai, pero no puedo aplicar formas ni efectos a stickers WEBP animados así! Envíalo como imagen normal o usa /s sin flags, ¡por favoooor~! 🥺', m, global.miku)
           }
           return sendWebpWithExif(buffer)
         }
@@ -138,7 +136,7 @@ export default {
       }
 
       if (/video/i.test(mime)) {
-        if ((quoted.msg || quoted).seconds > 20) return m.reply('💙 El video no puede ser muy largo', m, global.miku)
+        if ((quoted.msg || quoted).seconds > 20) return m.reply('💖 ¡Ehhh~! ¡El video es demasiado largo senpai! Tiene que ser de menos de 20 segundos, ¡ganbatte~! 🎬', m, global.miku)
         const buffer = await quoted.download()
         const inFile = tmp(`vid-${Date.now()}.mp4`)
         fs.writeFileSync(inFile, buffer)
@@ -150,11 +148,11 @@ export default {
       if (urlArg) {
         const url = urlArg
         if (!url.match(/\.(jpe?g|png|gif|webp|mp4|mov|avi|mkv|webm)(\?.*)?$/i)) {
-          return client.reply(m.chat, '💙 La URL debe ser de una imagen (jpg, png, gif, webp) o video (mp4, mov, avi, mkv, webm)', m, global.miku)
+          return client.reply(m.chat, '💖 ¡Mmmh~! ¡Esa URL no es válida, senpai! Tiene que ser una imagen (jpg, png, gif, webp) o video (mp4, mov, avi, mkv, webm), ¡por favoooor~! 🥺', m, global.miku)
         }
 
         const res = await fetch(url)
-        if (!res.ok) return client.reply(m.chat, '💙 No pude descargar ese archivo desde la URL.', m, global.miku)
+        if (!res.ok) return client.reply(m.chat, '💖 ¡Kyaaaa~! ¡No pude descargar ese archivo desde la URL, senpai! ¡Inténtalo de nuevo, por favor~! 😭', m, global.miku)
         const buffer = Buffer.from(await res.arrayBuffer())
 
         if (url.match(/\.webp(\?.*)?$/i)) {
@@ -181,11 +179,11 @@ export default {
 
       return client.reply(
         m.chat,
-        `💙 Por favor, envía una imagen, video, sticker o URL para hacer un sticker.`,
+        `💖 ¡Ehhh senpai~! ¡Para hacer un sticker necesito que me envíes una imagen, video, sticker o URL primero! ¡Venga, ánimo~! ✨`,
         m, global.miku
       )
     } catch (e) {
-      return m.reply(`💙 An unexpected error occurred while executing command *${usedPrefix + command}*. Please try again or contact support if the issue persists.\n> [Error: *${e.message}*]`)
+      return m.reply(`💖 ¡Kyaaaa~! ¡Algo salió mal al ejecutar *${usedPrefix + command}*, senpai! ¡No es culpa tuya, lo prometo~! Inténtalo de nuevo o contacta soporte, ¡por favor~! 🥺\n> [Error: *${e.message}*]`)
     }
   }
 }
