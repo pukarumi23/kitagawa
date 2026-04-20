@@ -4,83 +4,209 @@ export default {
   command: ['twitter', 'x', 'xdl'],
   category: 'downloader',
   run: async (client, m, args, usedPrefix, command) => {
+    // ✅ Validación de argumentos
     if (!args[0]) {
-      return m.reply('🧡 Por favor, ingrese un enlace de Twitter/X.', m, global.miku)
+      return m.reply('💋 ¿En serio? ¿Sin enlace? Pídelo bien, cariño~', m, global.miku)
     }
-    if (!args[0].match(/(twitter|x)\.com\/\w+\/status\//)) {
-      return m.reply('🧡 El enlace no parece válido. Asegúrate de que sea de Twitter/X.', m, global.miku)
+
+    // ✅ Validación mejorada de URL
+    const urlRegex = /^https?:\/\/(twitter|x)\.com\/\w+\/status\/\d+/i
+    if (!urlRegex.test(args[0])) {
+      return m.reply('💋 Ese enlace no se ve bien, amor... Asegúrate de que sea de Twitter/X, ¿sí?', m, global.miku)
     }
     
     await m.react('⏳')
     
     try {
       const data = await getTwitterMedia(args[0])
-      if (!data) {
+      
+      // ✅ Validación completa de datos
+      if (!data || !data.url) {
         await m.react('❌')
-        return m.reply('🧡 No se pudo obtener el contenido.', m, global.miku)
+        return m.reply('💋 Ay, no pude obtener el contenido... Qué pena~', m, global.miku)
       }
-      const caption = `🧡 *TWITTER DOWNLOAD* 🧡
 
-${data.title ? `🧡 *Título:* ${data.title}\n` : ''}${data.author ? `🏵️ *Autor:* ${data.author}\n` : ''}${data.date ? `🧡 *Fecha:* ${data.date}\n` : ''}${data.duration ? `🏵️ *Duración:* ${data.duration}\n` : ''}${data.resolution ? `🧡 *Resolución:* ${data.resolution}\n` : ''}${data.views ? `🏵️ *Vistas:* ${data.views}\n` : ''}${data.likes ? `🧡 *Likes:* ${data.likes}\n` : ''}${data.comments ? `🏵️ *Comentarios:* ${data.comments}\n` : ''}${data.retweets ? `🧡 *Retweets:* ${data.retweets}\n` : ''}🏵️ *Enlace:* ${args[0]}
-
-🧡 *KITAGAWA BOT* 🧡`
+      // 🔥 Mensaje con personalidad de Marin Kitagawa
+      const caption = crearMensajeMarin(data, args[0])
+      
       if (data.type === 'video') {
-        await client.sendMessage(m.chat, { video: { url: data.url }, caption, mimetype: 'video/mp4', fileName: 'twitter.mp4' }, { quoted: m })
+        await client.sendMessage(m.chat, { 
+          video: { url: data.url }, 
+          caption, 
+          mimetype: 'video/mp4', 
+          fileName: 'twitter.mp4' 
+        }, { quoted: m })
       } else if (data.type === 'image') {
-        await client.sendMessage(m.chat, { image: { url: data.url }, caption }, { quoted: m })
+        await client.sendMessage(m.chat, { 
+          image: { url: data.url }, 
+          caption 
+        }, { quoted: m })
       } else {
-        throw new Error('Contenido no soportado.')
+        throw new Error('Ese contenido no me interesa, sorry~')
       }
+      
       await m.react('✅')
     } catch (e) {
       await m.react('❌')
-      await m.reply(`🧡 *ERROR* 🧡
+      await m.reply(`💋 *¡UPS!* 💋
 
-🧡 Ocurrió un error al ejecutar *${usedPrefix + command}*
+Algo salió mal con *${usedPrefix + command}*...
 
-🏵️ *Error:* ${e.message}
+*Error:* ${e.message}
 
-🧡 Inténtalo de nuevo o contacta soporte.`)
+Intenta de nuevo, ¿sí? Me encantaría ayudarte~ 💕`)
     }
   }
 }
 
+/**
+ * 🔥 Genera el mensaje con la personalidad de Marin Kitagawa
+ */
+function crearMensajeMarin(data, url) {
+  let mensaje = `💋 *¡Mira lo que te bajé, cariño!* 💋\n\n`
+
+  if (data.title) {
+    mensaje += `✨ *Título:* ${data.title}\n`
+  }
+  
+  if (data.author) {
+    mensaje += `👤 *De:* ${data.author}\n`
+  }
+  
+  if (data.date) {
+    mensaje += `📅 *Fecha:* ${data.date}\n`
+  }
+  
+  if (data.duration) {
+    mensaje += `⏱️ *Duración:* ${data.duration}\n`
+  }
+  
+  if (data.resolution) {
+    mensaje += `📺 *Calidad:* ${data.resolution}\n`
+  }
+
+  // Stats del tweet
+  const stats = []
+  if (data.views) stats.push(`👀 ${data.views} vistas`)
+  if (data.likes) stats.push(`❤️ ${data.likes} likes`)
+  if (data.comments) stats.push(`💬 ${data.comments} comentarios`)
+  if (data.retweets) stats.push(`🔄 ${data.retweets} retweets`)
+  
+  if (stats.length > 0) {
+    mensaje += `\n📊 *Estadísticas:*\n`
+    stats.forEach(stat => mensaje += `   ${stat}\n`)
+  }
+
+  mensaje += `\n🔗 *Enlace original:*\n${url}\n\n`
+  mensaje += `✨ *Descargado por Marin Kitagawa Bot* ✨\n`
+  mensaje += `💕 ¿Te gustó? Vuelve pronto, cariño~ 💕`
+
+  return mensaje
+}
+
+/**
+ * ✅ Obtiene el contenido multimedia de Twitter/X
+ */
 async function getTwitterMedia(url) {
   const apis = [
-    { endpoint: `${global.APIs.stellar.url}/dl/twitter?url=${encodeURIComponent(url)}&key=${global.APIs.stellar.key}`, extractor: res => {
-        if (!res.status || !res.data?.result?.length) return null
+    {
+      name: 'Stellar',
+      endpoint: `${global.APIs.stellar.url}/dl/twitter?url=${encodeURIComponent(url)}&key=${global.APIs.stellar.key}`,
+      extractor: (res) => {
+        if (!res?.status || !res?.data?.result?.length) return null
         const media = res.data.result[0]
-        return { type: res.data.type, title: res.data.title || null, duration: res.data.duration || null, resolution: media.quality || null, url: media.url, thumbnail: res.data.thumbnail || null }
+        return {
+          type: res.data.type || 'unknown',
+          title: res.data.title || null,
+          duration: res.data.duration || null,
+          resolution: media.quality || null,
+          url: media.url || null,
+          thumbnail: res.data.thumbnail || null
+        }
       }
     },
-    { endpoint: `${global.APIs.nekolabs.url}/downloader/twitter?url=${encodeURIComponent(url)}`, extractor: res => {
-        if (!res.success || !res.result?.media?.length) return null
+    {
+      name: 'NekoLabs',
+      endpoint: `${global.APIs.nekolabs.url}/downloader/twitter?url=${encodeURIComponent(url)}`,
+      extractor: (res) => {
+        if (!res?.success || !res?.result?.media?.length) return null
         const media = res.result.media[0]
         const variant = media.variants?.at(-1)
-        return { type: media.type, title: res.result.title || null, resolution: variant?.resolution || null, url: variant?.url || null, thumbnail: media.thumbnail || null }
+        return {
+          type: media.type || 'unknown',
+          title: res.result.title || null,
+          resolution: variant?.resolution || null,
+          url: variant?.url || null,
+          thumbnail: media.thumbnail || null
+        }
       }
     },
-    { endpoint: `${global.APIs.delirius.url}/download/twitterv2?url=${encodeURIComponent(url)}`, extractor: res => {
-        if (!res.status || !res.data?.media?.length) return null
+    {
+      name: 'Delirius',
+      endpoint: `${global.APIs.delirius.url}/download/twitterv2?url=${encodeURIComponent(url)}`,
+      extractor: (res) => {
+        if (!res?.status || !res?.data?.media?.length) return null
         const media = res.data.media[0]
         const video = media.videos?.at(-1)
-        return { type: media.type, title: res.data.description || null, author: res.data.author?.username || null, date: res.data.createdAt || null, duration: media.duration || null, resolution: video?.quality || null, url: video?.url || null, thumbnail: media.cover || null, views: res.data.view || null, likes: res.data.favorite || null, comments: res.data.replie || null, retweets: res.data.retweet || null }
+        return {
+          type: media.type || 'unknown',
+          title: res.data.description || null,
+          author: res.data.author?.username || null,
+          date: res.data.createdAt || null,
+          duration: media.duration || null,
+          resolution: video?.quality || null,
+          url: video?.url || null,
+          thumbnail: media.cover || null,
+          views: res.data.view || null,
+          likes: res.data.favorite || null,
+          comments: res.data.replies || null, // ✅ Corregido "replie" -> "replies"
+          retweets: res.data.retweet || null
+        }
       }
     },
-    { endpoint: `${global.APIs.siputzx.url}/api/d/twitter?url=${encodeURIComponent(url)}`, extractor: res => {
-        if (!res.status || !res.data?.downloadLink) return null
-        return { type: 'video', title: res.data.videoTitle || null, url: res.data.downloadLink, thumbnail: res.data.imgUrl || null }
+    {
+      name: 'SiputZX',
+      endpoint: `${global.APIs.siputzx.url}/api/d/twitter?url=${encodeURIComponent(url)}`,
+      extractor: (res) => {
+        if (!res?.status || !res?.data?.downloadLink) return null
+        return {
+          type: 'video',
+          title: res.data.videoTitle || null,
+          url: res.data.downloadLink || null,
+          thumbnail: res.data.imgUrl || null
+        }
       }
     }
   ]
 
-  for (const { endpoint, extractor } of apis) {
+  // ✅ Timeout global de 20 segundos
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Tiempo límite excedido')), 20000)
+  )
+
+  for (const { name, endpoint, extractor } of apis) {
     try {
-      const res = await fetch(endpoint).then(r => r.json())
+      const fetchPromise = fetch(endpoint)
+        .then(r => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`)
+          return r.json()
+        })
+
+      const res = await Promise.race([fetchPromise, timeoutPromise])
+      
+      // ✅ Validación del resultado
       const result = extractor(res)
-      if (result) return result
-    } catch {}
-    await new Promise(r => setTimeout(r, 500))
+      if (result?.url) {
+        console.log(`✅ Contenido obtenido de: ${name}`)
+        return result
+      }
+    } catch (error) {
+      console.error(`❌ Error en ${name}:`, error.message)
+    }
+    
+    // ✅ Espera entre intentos
+    await new Promise(r => setTimeout(r, 800))
   }
+
   return null
 }
