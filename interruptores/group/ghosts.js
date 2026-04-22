@@ -11,7 +11,7 @@ export default {
     const inactiveThreshold = now - (inactiveDays * 24 * 60 * 60 * 1000);
     let inactiveUsers = [];
     for (const participant of participants) {
-      const jid = participant.id;
+      let jid = participant.id;  // ✅ CAMBIO: const → let
       
       if (typeof jid === 'string' && jid.includes(':')) {
         jid = jid.split(':')[0] + '@s.whatsapp.net';
