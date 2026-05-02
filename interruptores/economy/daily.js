@@ -3,7 +3,7 @@ export default {
   category: 'rpg',
   run: async (client, m, args, usedPrefix) => {
     const chat = global.db.data.chats[m.chat]
-    if (chat.adminonly || !chat.economy) return m.reply(`💙 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)
+    if (chat.adminonly || !chat.economy) return m.reply(`🎀 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)
     const botId = client.user.id.split(':')[0] + '@s.whatsapp.net'
     const bot = global.db.data.settings[botId]
     const monedas = bot.currency
@@ -18,7 +18,7 @@ export default {
     user.lastdaily ??= 0
     if (now < user.lastdaily) {
       const restante = formatRemainingTime(user.lastdaily - now)
-      return m.reply(`💙 Ya has reclamado tu *Daily* de hoy.\n> Puedes reclamarlo de nuevo en *${restante}*`)
+      return m.reply(`🎀 ¡Eeeh! ¡Ya reclamaste tu *Daily* de hoy!\n> Puedes reclamarlo de nuevo en *${restante}* ✨`)
     }
     const lost = users.streak >= 1 && now - users.lastDailyGlobal > oneDay * 1.5
     if (lost) users.streak = 0
@@ -31,12 +31,11 @@ export default {
     user.coins += recompensa
     user.lastdaily = now + oneDay
     const siguiente = Math.min(20000 + users.streak * 5000, 1015000).toLocaleString()
-    let msg = `> Día *${users.streak + 1}* » *+🌱${siguiente}*`
-    if (lost) msg += `\n> 👑😒 ¡Has perdido tu racha de días!`
-    await m.reply(`💙 Has reclamado tu recompensa diaria de *🌱${recompensa.toLocaleString()} ${monedas}*! (Día *${users.streak}*)\n${msg}`)
+    let msg = `> Día *${users.streak + 1}* » *+✨${siguiente}*`
+    if (lost) msg += `\n> 🎀😤 ¡Perdiste tu racha de días, nooo!`
+    await m.reply(`🎀 ¡Toma tu recompensa diaria de *✨${recompensa.toLocaleString()} ${monedas}*! (Día *${users.streak}*)\n${msg}`)
   },
 }
-
 function formatRemainingTime(ms) {
   const s = Math.floor(ms / 1000)
   const h = Math.floor((s % 86400) / 3600)
