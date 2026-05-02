@@ -72,7 +72,7 @@ export default {
     ]
     const message = éxito ? pickRandom(successMessages) : pickRandom(failMessages)
     try {
-      await m.reply(`🧡 ${message}`)
+      await m.reply(`⫸ ${message}`)
     } catch (e) {
       console.error('[CRIME] Error al enviar mensaje:', e)
     }
