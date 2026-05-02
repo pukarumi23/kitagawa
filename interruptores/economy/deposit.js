@@ -1,5 +1,4 @@
 import { getBotJid } from '../../lib/bot-helper.js'
-
 export default {
   command: ['dep', 'deposit', 'd'],
   category: 'rpg',
@@ -10,31 +9,31 @@ export default {
     const monedas = settings.currency
     const chatData = global.db.data.chats[m.chat]
     
-    if (chatData.adminonly || !chatData.economy) return m.reply(`💙 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)
+    if (chatData.adminonly || !chatData.economy) return m.reply(`🎀 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)
     
     if (!args[0]) {
-      return m.reply(`💙 Ingresa la cantidad de *${monedas}* que quieras *depositar*`)
+      return m.reply(`🎀 ¡Eeeh! ¿Cuántos *${monedas}* quieres *depositar*? ¡Dímelo~!`)
     }
     if (args[0] < 1 && args[0].toLowerCase() !== 'all') {
-      return m.reply(`🌱 Ingresa una cantidad *válida* para depositar`)
+      return m.reply(`✨ Ingresa una cantidad *válida* para depositar, ¡no me hagas repetirlo!`)
     }
     if (args[0].toLowerCase() === 'all') {
-      if (user.coins <= 0) return m.reply(`💙 No tienes *${monedas}* para depositar en tu *banco*`)
+      if (user.coins <= 0) return m.reply(`🎀 ¡No tienes *${monedas}* para depositar en tu *banco*!`)
       const count = user.coins
       user.coins = 0
       user.bank += count
-      await m.reply(`🌱 Has depositado *${count.toLocaleString()} ${monedas}* en tu Banco`)
+      await m.reply(`✨ ¡Listo! Depositaste *${count.toLocaleString()} ${monedas}* en tu Banco~`)
       return true
     }
     if (!Number(args[0]) || parseInt(args[0]) < 1) {
-      return m.reply(`💙 Ingresa una cantidad *válida* para depositar`)
+      return m.reply(`🎀 Ingresa una cantidad *válida* para depositar, ¡en serio~!`)
     }
     const count = parseInt(args[0])
     if (user.coins <= 0 || user.coins < count) {
-      return m.reply(`🌱 No tienes suficientes *${monedas}* para depositar`)
+      return m.reply(`✨ ¡No tienes suficientes *${monedas}* para depositar!`)
     }
     user.coins -= count
     user.bank += count
-    await m.reply(`💙 Has depositado *${count.toLocaleString()} ${monedas}* en tu Banco`)
+    await m.reply(`🎀 ¡Toma~! Depositaste *${count.toLocaleString()} ${monedas}* en tu Banco ✨`)
   },
 };
