@@ -1,5 +1,4 @@
 import { delay } from "@whiskeysockets/baileys"
-
 let buatall = 1
 export default {
   command: ['apostar', 'casino'],
@@ -7,7 +6,7 @@ export default {
   run: async (client, m, args, usedPrefix, command) => {
     const db = global.db.data
     const chatData = db.chats[m.chat]
-    if (chatData.adminonly || !chatData.economy) return m.reply(`💙 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`, m, global.miku)
+    if (chatData.adminonly || !chatData.economy) return m.reply(`🌸 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`, m, global.miku)
     const botId = client.user.id.split(':')[0] + '@s.whatsapp.net'
     const bot = db.settings[botId]
     const currency = bot.currency
@@ -23,13 +22,13 @@ export default {
     if (user.lastApuesta && ahora - user.lastApuesta < tiempoEspera) {
       const restante = user.lastApuesta + tiempoEspera - ahora
       const tiempoRestante = formatTime(restante)
-      return client.reply(m.chat, `🌱 Debes esperar *${tiempoRestante}* para usar *${usedPrefix + command}* nuevamente.`, m, global.miku)
+      return client.reply(m.chat, `🍀 Debes esperar *${tiempoRestante}* para usar *${usedPrefix + command}* nuevamente.`, m, global.miku)
     }
     user.lastApuesta = ahora
     count = count ? /all/i.test(count) ? Math.floor(db.users[m.sender].limit / buatall) : parseInt(count) : args[0] ? parseInt(args[0]) : 1
     count = Math.max(1, count)
     if (args.length < 1) {
-      return client.reply(m.chat, `💙 Ingresa la cantidad de *${currency}* que deseas aportar contra *${botname}*\n> Ejemplo: *${usedPrefix + command} 100*`, m, global.miku)
+      return client.reply(m.chat, `🌸 Ingresa la cantidad de *${currency}* que deseas aportar contra *${botname}*\n> Ejemplo: *${usedPrefix + command} 100*`, m, global.miku)
     }
     if (user.coins >= count) {
       user.coins -= count
@@ -46,22 +45,20 @@ export default {
         user.coins += ganancia
         resultado = `> ${userName}, *Ganaste ${formatNumber(ganancia)} ${currency}*.`
       }
-      let { key } = await client.sendMessage(m.chat, { text: "🎲 💙 El crupier lanza los dados... ¡Las apuestas están cerradas!" }, { quoted: m })
+      let { key } = await client.sendMessage(m.chat, { text: "🎲 🌸 El crupier lanza los dados... ¡Las apuestas están cerradas!" }, { quoted: m })
       await delay(2000)
-      await client.sendMessage(m.chat, { text: "🌱 Los números están girando... ¡Prepárate para el resultado!", edit: key }, { quoted: m })
+      await client.sendMessage(m.chat, { text: "🍀 Los números están girando... ¡Prepárate para el resultado!", edit: key }, { quoted: m })
       await delay(2000)
-      const replyMsg = `💙 \`Veamos qué números tienen!\`\n\n➠ *${botname}* : ${Aku}\n➠ *${userName}* : ${Kamu}\n\n${resultado}`
+      const replyMsg = `🧡 \`Veamos qué números tienen!\`\n\n➠ *${botname}* : ${Aku}\n➠ *${userName}* : ${Kamu}\n\n${resultado}`
       await client.sendMessage(m.chat, { text: replyMsg.trim(), edit: key }, { quoted: m })
     } else {
-      client.reply(m.chat, `🌱 No tienes *${formatNumber(count)} ${currency}* para apostar!`, m, global.miku)
+      client.reply(m.chat, `🍀 No tienes *${formatNumber(count)} ${currency}* para apostar!`, m, global.miku)
     }
   }
 }
-
 function formatNumber(number) {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
-
 function formatTime(ms) {
   if (ms <= 0 || isNaN(ms)) return 'Ahora'
   const totalSec = Math.ceil(ms / 1000)
