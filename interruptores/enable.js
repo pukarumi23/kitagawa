@@ -2,7 +2,7 @@ import initDB from '../lib/system/initDB.js';
 import welcomeHandler from './welcome.js';
 
 const linkRegex = /(https?:\/\/)?(chat\.whatsapp\.com\/[0-9A-Za-z]{20,24}|whatsapp\.com\/channel\/[0-9A-Za-z]{20,24})/i;
-const allowedLinks = ['https://www.whatsapp.com/channel/0029VajYamSIHphMAl3ABi1o'];
+const allowedLinks = ['https://whatsapp.com/channel/0029VbC04aQ6mYPDkbiMte0u'];
 
 async function antilink(client, m) {
   if (!m.isGroup || !m.text) return;
@@ -26,7 +26,7 @@ async function antilink(client, m) {
   if (!(command === 'invite')) {
     const isChannelLink = /whatsapp\.com\/channel\//i.test(m.text);
     const userName = global.db.data.users[m.sender]?.name || 'Usuario';
-    await client.reply(m.chat, `💙 Se ha eliminado a *${userName}* del grupo por \`Anti-Link\`, no permitimos enlaces de *${isChannelLink ? 'canales' : 'otros grupos'}*.`, null);
+    await client.reply(m.chat, `✨ ¡Eeeeh!? *${userName}* mandó un link de *${isChannelLink ? 'un canal' : 'otro grupo'}* y tuve que sacarlo del grupo~ 💔 ¡Las reglas son las reglas, no importa cuánto me duela! Si quieres volver, ¡la próxima vez respeta las normas, ne~! 🎀`, null);
     await client.groupParticipantsUpdate(m.chat, [m.sender], 'remove');
   }
 }
@@ -91,7 +91,7 @@ async function showEnableList(client, m) {
     { name: 'audios', description: 'Responde automáticamente con audios por palabras clave (configurable por grupo o global)', status: '🔵 Configurable' }
   ];
 
-  let message = `💙 *Funciones Disponibles para Activar*\n\n`;
+  let message = `🏵️ *Funciones Disponibles para Activar*\n\n`;
   message += `┌─⚡ *Funciones Principales Activas*\n`;
   
   availableFunctions.forEach((func, index) => {
@@ -103,7 +103,7 @@ async function showEnableList(client, m) {
   });
   
   message += `└─⚡\n\n`;
-    message += `🌱 *Uso:* \`.enable <función>\` para activar/desactivar\n`;
+    message += `🪷 *Uso:* \`.enable <función>\` para activar/desactivar\n`;
     message += `💫 *Ejemplo:* \`.enable antilink on\` | \`.enable welcome off\` | \`.enable audios global\``;
 
   await client.reply(m.chat, message, m, global.miku);
