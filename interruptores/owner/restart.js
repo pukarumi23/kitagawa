@@ -3,7 +3,7 @@ export default {
   category: 'mod',
   isOwner: true,
   run: async (client, m) => {
-    await client.reply(m.chat, `💙 *Reiniciando...* 💙\n\n🌱 Espere un momento...\n\n✨ *HATSUNE MIKU BOT*`, m, global.miku)
+    await client.reply(m.chat, `💗 *Reiniciando...* 💗\n\n🌿 Espere un momento...\n\n✨ *𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗕𝗢𝗧*`, m, global.miku)
     setTimeout(() => {
     if (process.send) {
     process.send("restart")
