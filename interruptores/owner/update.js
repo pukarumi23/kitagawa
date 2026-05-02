@@ -44,7 +44,7 @@ export default {
 🔄 Sin cambios por el momento
 💗 ¡El bot está funcionando perfecto con la última versión disponible~! ¡Sugoi!`
       } else {
-        msg = `✨💗 𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗕𝗢𝗧 💗✨
+        msg = `🌿💗 𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗕𝗢𝗧 💗🌿
 🌸 ¡Kyaa~! ¡Actualización Completada!
 🔄 ¡Git Pull ejecutado exitosamente~!
 📦 ¡Paquetes actualizados sin problemas~!
