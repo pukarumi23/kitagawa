@@ -6,7 +6,7 @@ export default {
     const start = Date.now()
     const chat = global.db.data.chats?.[m.chat]
     if (!chat?.users || typeof chat.users !== 'object')
-      return m.reply('💙 No se encontraron datos del grupo.')
+      return m.reply('🌸 ¡Kyaa~! No se encontraron datos del grupo.')
     const LIMITE = 40 * 24 * 60 * 60 * 1000
     const now = Date.now()
     let userList = [], mentions = [], eliminados = 0, waifus = 0, dinero = 0
@@ -36,12 +36,11 @@ export default {
       mentions.push(jid)
     }
     if (!eliminados)
-      return m.reply('💙 No se encontraron usuarios inactivos.\n> ⴵ Tiempo limite: 40 dias')
-    const report = ['💙 *Limpieza Completada* 💙', '', `🌱 *Claims eliminados:* ${waifus}`, `💙 *Coins eliminados:* ${dinero.toLocaleString()}`, `🌱 *Usuarios inactivos:* ${eliminados}`, `💙 *Tiempo límite:* 40 días`, `🌱 *Ejecutado en:* ${getDuration(start)}ms`, '', '✨ *Usuarios eliminados:*', '', ...userList, '', '💙🌱 *HATSUNE MIKU BOT* 🌱💙'].join('\n')
+      return m.reply('💗 ¡Ehh~! No se encontraron usuarios inactivos, ¡qué bien~!\n> ⴵ Tiempo limite: 40 dias')
+    const report = ['✨ *¡Limpieza Completada~!* ✨', '', `🌸 *Claims eliminados:* ${waifus}`, `💗 *Coins eliminados:* ${dinero.toLocaleString()}`, `🌸 *Usuarios inactivos:* ${eliminados}`, `💗 *Tiempo límite:* 40 días`, `🌸 *Ejecutado en:* ${getDuration(start)}ms`, '', `💗 *Usuarios eliminados~:*`, '', ...userList, '', '✨🌸 *HATSUNE MIKU BOT* 🌸✨'].join('\n')
     await client.sendMessage(m.chat, { text: report, mentions }, { quoted: m })
   },
 }
-
 const formatTime = ms => {
   const sec = Math.floor(ms / 1000)
   const d = Math.floor(sec / 86400)
