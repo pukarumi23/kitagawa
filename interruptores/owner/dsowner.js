@@ -42,7 +42,7 @@ export default {
         await client.reply(m.chat, `💗 ¡Ehh~! La carpeta ya está vacía, ¡no había nada que limpiar~!`, m, global.miku)
       } else {
         await m.react('✅')
-        await client.reply(m.chat, `✨ *¡Limpieza Completada~!* ✨\n\n🌸 Se eliminaron ${filesDeleted} archivos de sesión\n💗 El archivo creds.json se mantuvo intacto y seguro~\n\n💗✨ *HATSUNE MIKU BOT* ✨💗`, m, global.miku)
+        await client.reply(m.chat, `✨ *¡Limpieza Completada~!* ✨\n\n🌸 Se eliminaron ${filesDeleted} archivos de sesión\n💗 El archivo creds.json se mantuvo intacto y seguro~\n\n💗✨ * 𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗕𝗢𝗧* ✨💗`, m, global.miku)
         await client.reply(m.chat, `🌸 *¡Kyaa~! ¡Hola! ¿Logras verme~? ¡Sugoi!* 💗`, m, global.miku)
       }
       
