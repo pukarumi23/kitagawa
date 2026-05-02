@@ -8,7 +8,7 @@ export default {
   isOwner: true,
   run: async (client, m, args, usedPrefix, command, text) => {
     if (!text.trim()) {
-      return client.reply(m.chat, '💙 Debes escribir un comando a ejecutar.', m, global.miku)
+      return client.reply(m.chat, '🌸 Debes escribir un comando a ejecutar.', m, global.miku)
     }
     let o
     try {
