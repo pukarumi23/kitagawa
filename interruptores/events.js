@@ -16,7 +16,7 @@ export default async (client, m) => {
       for (const p of anu.participants) {
         const jid = p.phoneNumber
         const phone = p.phoneNumber?.split('@')[0] || jid.split('@')[0]
-        const pp = await client.profilePictureUrl(jid, 'image').catch(_ => 'https://i.pinimg.com/736x/0c/1e/f8/0c1ef8e804983e634fbf13df1044a41f.jpg')       
+        const pp = await client.profilePictureUrl(jid, 'image').catch(_ => 'https://i.pinimg.com/736x/1b/6e/fc/1b6efc88e72a4a166acd7d9a0357a309.jpg')       
         const mensajes = { add: chat.sWelcome ? `\n ${chat.sWelcome.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', remove: chat.sGoodbye ? `\n ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', leave: chat.sGoodbye ? `\n ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '' }
         const fakeContext = {
           contextInfo: {
