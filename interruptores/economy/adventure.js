@@ -7,14 +7,14 @@ export default {
     const currency = global.db.data.settings[botId]?.currency || 'monedas'
     const chat = global.db.data.chats[m.chat]
     
-    if (chat.adminonly || !chat.economy) return m.reply(`💙 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)    
+    if (chat.adminonly || !chat.economy) return m.reply(`🌸 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`)    
     user.lastadventure ||= 0
     if (user.coins == null) user.coins = 0
     if (user.health == null) user.health = 100
-    if (user.health < 5) return m.reply(`🌱 No tienes suficiente salud para volver a *aventurarte*.\n> Usa *"${usedPrefix}heal"* para curarte.`)
+    if (user.health < 5) return m.reply(`🧡 No tienes suficiente salud para volver a *aventurarte*.\n> Usa *"${usedPrefix}heal"* para curarte.`)
     const remainingTime = user.lastadventure - Date.now()
     if (remainingTime > 0) {
-      return m.reply(`💙 Debes esperar *${msToTime(remainingTime)}* antes de volver a aventurarte.`)
+      return m.reply(`🌸 Debes esperar *${msToTime(remainingTime)}* antes de volver a aventurarte.`)
     }
     const rand = Math.random()
     let cantidad = 0
@@ -79,7 +79,7 @@ export default {
       message = pickRandom(neutralMessages)
     }
     user.lastadventure = Date.now() + 20 * 60 * 1000
-    await client.sendMessage(m.chat, { text: `🌱 ${message}` }, { quoted: m })
+    await client.sendMessage(m.chat, { text: `🌺 ${message}` }, { quoted: m })
   },
 }
 
