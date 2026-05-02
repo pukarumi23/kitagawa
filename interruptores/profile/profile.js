@@ -22,7 +22,7 @@ export default {
     const globalUsers = global.db.data.users || {}
     const userss = global.db.data.chats[m.chat].users[userId] || {}
     if (!userss) {
-      return m.reply('🌸 ¡Kyaa~! El usuario *mencionado* no está *registrado* en el bot, ¡qué pena~!')
+      return m.reply('⚠️ El usuario *mencionado* no está *registrado* en el bot.')
     }
     const idBot = client.user.id.split(':')[0] + '@s.whatsapp.net' || ''
     const settings = global.db.data.settings[idBot] || {}
@@ -60,35 +60,36 @@ export default {
       const { min, xp } = xpRange(nivel, global.multiplier)
       const progreso = exp - min
       const porcentaje = xp > 0 ? Math.floor((progreso / xp) * 100) : 0
-      const profileText = `💗🌸 *¡Perfil de ${name}~!* 🌸💗${desc}
+      const profileText = `👤 *PERFIL — ${name}*${desc}
 
-🎂 *Cumpleaños* › *${birth}*
-✨ *Pasatiempo* › *${pasatiempo}*
-💗 *Género* › *${genero}*
-💞 ${estadoCivil} › *${pareja}*
+┌─────────────────────
+│ 🎂 *Cumpleaños* › *${birth}*
+│ 🎯 *Pasatiempo* › *${pasatiempo}*
+│ 🪪 *Género* › *${genero}*
+│ 💍 ${estadoCivil} › *${pareja}*
+└─────────────────────
+
+📊 *ESTADÍSTICAS*
+
+│ 🔹 *Nivel* › *${nivel}*
+│ 🔹 *Experiencia* › *${exp}*
+│ 🔹 *Progreso* › *${progreso} / ${xp}* _(${porcentaje}%)_
+│ 🔹 *Ranking* › *#${rank}*
 
 ━━━━━━━━━━━━━━━━━━
 
-🌸 *¡Estadísticas~!* 🌸
+💼 *HAREM & ECONOMÍA*
 
-✨ *Nivel* › *${nivel}*
-💗 *Experiencia* › *${exp}*
-✨ *Progreso* › *${progreso} => ${xp}* _(${porcentaje}%)_
-💗 *Ranking* › *#${rank}*
+│ 🔸 *Harem* › *${haremCount}*
+│ 🔸 *Valor total* › *${haremValue}*${favLine}
+│ 🔸 *Coins totales* › *¥${totalCoins} ${currency}*
+│ 🔸 *Comandos ejecutados* › *${comandos}*
 
-━━━━━━━━━━━━━━━━━━
-
-💗 *¡Harem & Economía~!* 💗
-
-✨ *Harem* › *${haremCount}*
-💗 *Valor total* › *${haremValue}*${favLine}
-✨ *Coins totales* › *¥${totalCoins} ${currency}*
-💗 *Comandos ejecutados* › *${comandos}*
-
-🌸✨ *𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗕𝗢𝗧* ✨🌸`
+─────────────────────
+        *𝙺𝙸𝚃𝙰𝙶𝙰𝚆𝙰 𝙱𝙾𝚃*`
       await client.sendMessage(m.chat, { image: { url: perfil }, caption: profileText }, { quoted: m })
     } catch (e) {
-      return m.reply(`💔 ¡Uwaaah~! Algo salió muy mal al ejecutar *${usedPrefix + command}*... ¡Qué susto~! Inténtalo de nuevo o contacta a soporte si el problema continúa.\n> [Error: *${e.message}*]`)
+      return m.reply(`❌ Ocurrió un error al ejecutar *${usedPrefix + command}*. Inténtalo de nuevo o contacta a soporte.\n> [Error: *${e.message}*]`)
     }
   }
 }
