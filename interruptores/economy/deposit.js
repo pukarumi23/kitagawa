@@ -19,7 +19,7 @@ export default {
       const count = user.coins
       user.coins = 0
       user.bank += count
-      await m.reply(`💗 ¡Sugoi~! Has depositado *🌱${count.toLocaleString()} ${monedas}* en tu Banco. ¡Eres muy responsable, me impresionas! ✨`)
+      await m.reply(`💗 ¡Sugoi~! Has depositado *◈${count.toLocaleString()} ${monedas}* en tu Banco. ¡Eres muy responsable, me impresionas! ✨`)
       return true
     }
     if (!Number(args[0]) || parseInt(args[0]) < 1) {
@@ -31,6 +31,6 @@ export default {
     }
     user.coins -= count
     user.bank += count
-    await m.reply(`✨ ¡Yatta~! Has depositado *🌱${count.toLocaleString()} ${monedas}* en tu Banco. ¡Qué inteligente de tu parte ahorrar así! 💗`)
+    await m.reply(`✨ ¡Yatta~! Has depositado *◈${count.toLocaleString()} ${monedas}* en tu Banco. ¡Qué inteligente de tu parte ahorrar así! 💗`)
   },
 };
