@@ -1,3 +1,4 @@
+//muestra error no aparece el texto que se quiere en whatsapp
 export default {
   command: ['cf', 'flip', 'coinflip'],
   category: 'rpg',
