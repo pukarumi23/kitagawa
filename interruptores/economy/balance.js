@@ -18,7 +18,7 @@ export default {
     }
     const user = chatData.users[who]
     const total = (user.coins || 0) + (user.bank || 0)
-    const bal = `🧡 *Balance de <${global.db.data.users[who].name}>*\n\n🌿 *Cartera:* ${user.coins?.toLocaleString() || 0} ${monedas}\n🧡 *Banco:* ${user.bank?.toLocaleString() || 0} ${monedas}\n🌱 *Total:* ${total.toLocaleString()} ${monedas}`
+    const bal = `🧡 *Balance de <${global.db.data.users[who].name}>*\n\n🌿 *Cartera:* ${user.coins?.toLocaleString() || 0} ${monedas}\n🧡 *Banco:* ${user.bank?.toLocaleString() || 0} ${monedas}\n⫸ *Total:* ${total.toLocaleString()} ${monedas}`
     await client.sendMessage(chatId, { text: bal }, { quoted: m })
   }
 };
