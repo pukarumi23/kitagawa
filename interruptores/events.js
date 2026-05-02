@@ -17,7 +17,7 @@ export default async (client, m) => {
         const jid = p.phoneNumber
         const phone = p.phoneNumber?.split('@')[0] || jid.split('@')[0]
         const pp = await client.profilePictureUrl(jid, 'image').catch(_ => 'https://i.pinimg.com/736x/0c/1e/f8/0c1ef8e804983e634fbf13df1044a41f.jpg')       
-        const mensajes = { add: chat.sWelcome ? `\n💙 ${chat.sWelcome.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', remove: chat.sGoodbye ? `\n💙 ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', leave: chat.sGoodbye ? `\n💙 ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '' }
+        const mensajes = { add: chat.sWelcome ? `\n ${chat.sWelcome.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', remove: chat.sGoodbye ? `\n ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '', leave: chat.sGoodbye ? `\n ${chat.sGoodbye.replace(/{usuario}/g, `@${phone}`).replace(/{grupo}/g, `*${metadata.subject}*`).replace(/{desc}/g, metadata?.desc || '🌸 Sin Desc 🌸')}` : '' }
         const fakeContext = {
           contextInfo: {
             isForwarded: true,
@@ -43,15 +43,15 @@ export default async (client, m) => {
         
         if (anu.action === 'promote' && chat?.alerts && (!primaryBotId || primaryBotId === botId)) {
           const usuario = anu.author
-          await client.sendMessage(anu.id, { text: `╭━━━━━━━━━╮\n┃ 🌟 *Promoción*\n╰━━━━━━━━━╯\n├◦ 🌱 *@${phone}* fue promovido a Admin\n╰◦ 💙 Por *@${usuario.split('@')[0]}*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
+          await client.sendMessage(anu.id, { text: `╭━━━━━━━━━╮\n┃ 🌟 *Promoción*\n╰━━━━━━━━━╯\n├◦ 🌱 *@${phone}* fue promovido a Admin\n╰◦ Por *@${usuario.split('@')[0]}*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
         }
         if (anu.action === 'demote' && chat?.alerts && (!primaryBotId || primaryBotId === botId)) {
           const usuario = anu.author
-          await client.sendMessage(anu.id, { text: `╭━━━━━━━━━╮\n┃ 🌸 *Degradación*\n╰━━━━━━━━━╯\n├◦ 🌱 *@${phone}* fue removido de Admin\n╰◦ 💙 Por *@${usuario.split('@')[0]}*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
+          await client.sendMessage(anu.id, { text: `╭━━━━━━━━━╮\n┃ 🌸 *Degradación*\n╰━━━━━━━━━╯\n├◦ 🌱 *@${phone}* fue removido de Admin\n╰◦ Por *@${usuario.split('@')[0]}*`, mentions: [jid, usuario, ...groupAdmins.map(v => v.id)] })
         }
       }
     } catch (err) {
-      console.log(chalk.gray(`💙 BOT   → ${err}`))
+      console.log(chalk.gray(`BOT   → ${err}`))
     }
   })
   client.ev.on('messages.upsert', async ({ messages }) => {
@@ -75,16 +75,16 @@ export default async (client, m) => {
     await client.sendMessage(id, { text: `🌱 ┃ @${phone} cambió el icono del grupo. ✨`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
   }
   if (m.messageStubType == 23) {
-    await client.sendMessage(id, { text: `💙 ┃ @${phone} restableció el enlace del grupo. ✨`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
+    await client.sendMessage(id, { text: `🌸 ┃ @${phone} restableció el enlace del grupo. ✨`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
   }
   if (m.messageStubType == 24) {
-    await client.sendMessage(id, { text: `🌸 ┃ @${phone} cambió la descripción del grupo. ✨`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
+    await client.sendMessage(id, { text: `🌱 ┃ @${phone} cambió la descripción del grupo. ✨`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
   }
   if (m.messageStubType == 25) {
-    await client.sendMessage(id, { text: `🌱 ┃ @${phone} cambió los ajustes ⟶ ${m.messageStubParameters[0] == 'on' ? 'solo admins pueden configurar el grupo.' : 'todos pueden configurar el grupo.'}`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
+    await client.sendMessage(id, { text: `🌸 ┃ @${phone} cambió los ajustes ⟶ ${m.messageStubParameters[0] == 'on' ? 'solo admins pueden configurar el grupo.' : 'todos pueden configurar el grupo.'}`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
   }
   if (m.messageStubType == 26) {
-    await client.sendMessage(id, { text: `💙 ┃ @${phone} cambió los ajustes ⟶ ${m.messageStubParameters[0] === 'on' ? 'solo admins pueden enviar mensajes.' : 'todos pueden enviar mensajes.'}`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
+    await client.sendMessage(id, { text: `🌱 ┃ @${phone} cambió los ajustes ⟶ ${m.messageStubParameters[0] === 'on' ? 'solo admins pueden enviar mensajes.' : 'todos pueden enviar mensajes.'}`, mentions: [actor, ...groupAdmins.map(v => v.id)] })
   }
 })
 }
