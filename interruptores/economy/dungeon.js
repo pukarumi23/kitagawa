@@ -7,15 +7,15 @@ export default {
     const botId = client.user.id.split(':')[0] + '@s.whatsapp.net'
     const currency = global.db.data.settings[botId].currency
     if (chat.adminonly || !chat.economy) 
-      return m.reply(`💙 Los comandos de *Economía* están desactivados en este grupo.\n\nUn *administrador* puede activarlos con el comando:\n» *${usedPrefix}economy on*`, m, global.miku)   
+      return m.reply(`✨ ¡Kyaa! Los comandos de *Economía* están desactivados en este grupo, qué pena~\n\n¡Pero un *administrador* puede activarlos, ve a pedírselo!\n» *${usedPrefix}economy on*`, m, global.miku)   
     user.lastdungeon ||= 0
     if (user.coins == null) user.coins = 0
     if (user.health == null) user.health = 100
     if (user.health < 5) 
-      return m.reply(`🌱 No tienes suficiente salud para volver a la *mazmorra*.\n> Usa *"${usedPrefix}heal"* para curarte.`, m, global.miku)
+      return m.reply(`💗 ¡Ehh! Estás muy lastimada para volver a la *mazmorra*... ¡Cúrate primero, no seas temeraria~!\n> Usa *"${usedPrefix}heal"* para recuperarte.`, m, global.miku)
     if (Date.now() < user.lastdungeon) {
       const restante = user.lastdungeon - Date.now()
-      return m.reply(`🌱 Debes esperar *${msToTime(restante)}* antes de volver a la mazmorra.`, m, global.miku)
+      return m.reply(`🌸 ¡Todavía necesitas descansar *${msToTime(restante)}* antes de volver a la mazmorra~! ¡El cuerpo también importa, okay!`, m, global.miku)
     }
     const rand = Math.random()
     let cantidad = 0
@@ -27,16 +27,16 @@ export default {
       user.coins += cantidad
       user.health -= salud
       const successMessages = [
-        `💙 Derrotaste al guardián de las ruinas y reclamaste el tesoro antiguo, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Descifraste los símbolos únicos y obtuviste recompensas ocultas, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Encuentras al sabio de la mazmorra, quien te premia por tu sabiduría, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 El espíritu de la reina ancestral te bendice con una gema de poder, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Superas la prueba de los espejos oscuros y recibes un artefacto único, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Derrotas a un gólem de obsidiana y desbloqueas un acceso secreto, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Salvas a un grupo de exploradores perdidos y ellos te recompensan, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Consigues abrir la puerta del juicio y extraes un orbe milenario, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Triunfas sobre un demonio ilusorio que custodiaba el sello perdido, ganaste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Purificas el altar corrompido y recibes una bendición ancestral, ganaste *${cantidad.toLocaleString()} ${currency}*.`
+        `💗 ¡¡Sugoi~!! Derrotaste al guardián de las ruinas con un solo golpe y reclamaste el tesoro antiguo, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! ✨`,
+        `🌸 ¡Yatta~! Descifraste los símbolos mágicos como toda una heroína y obtuviste recompensas ocultas, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 💗`,
+        `✨ ¡Kyaa~! El sabio de la mazmorra quedó tan impresionado contigo que te premió por tu inteligencia, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 🌸`,
+        `💗 ¡Uwaaah~! El espíritu de la reina ancestral te bendijo con una gema brillante de poder, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! ✨`,
+        `🌸 ¡Increíble~! Superaste la prueba de los espejos oscuros sin pestañear y recibiste un artefacto único, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 💗`,
+        `✨ ¡Sugoi sugoi~! Derrotaste a un gólem de obsidiana y desbloqueaste un acceso secreto épico, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 🌸`,
+        `💗 ¡Qué ternura~! Salvaste a un grupo de exploradores perdidos y ellos te recompensaron con todo su corazón, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! ✨`,
+        `🌸 ¡Waaah~! Conseguiste abrir la puerta del juicio que nadie más pudo y extrajiste un orbe milenario, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 💗`,
+        `✨ ¡Yatta yatta~! Triunfaste sobre un demonio ilusorio que custodiaba el sello perdido, ¡eres tan fuerte~! ¡ganaste *${cantidad.toLocaleString()} ${currency}*! 🌸`,
+        `💗 ¡Kyaa~! Purificaste el altar corrompido con tu energía y recibiste una bendición ancestral poderosa, ¡ganaste *${cantidad.toLocaleString()} ${currency}*! ✨`
       ]
       message = pickRandom(successMessages)
     } else if (rand < 0.7) {
@@ -60,32 +60,32 @@ export default {
       user.health -= salud
       if (user.health < 0) user.health = 0
       const failMessages = [
-        `💙 El guardián te atacó sin previo aviso y te hirió gravemente, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Las paredes se cerraron repentinamente y quedaste atrapado, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 El suelo se abrió bajo tus pies y cayeron garras afiladas, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Una trampa falsa se activó y te lanzó por un acantilado, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 El aire se volvió tóxico y comenzaste a ahogar, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Un falso tesoro te engañó y desapareciste cuando lo tocaste, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 El guardián te encontró y te persiguió por los pasillos oscuros, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Las runas mágicas se activaron y te teletransportaron a una jaula, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Un gárgola te mordió las piernas y te arrastró a las profundidades, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 El alma del laberinto te absorbió y casi te vuelve loco, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `💙 Un espectro te poseyó y comenzó a alimentarse de tu miedo, perdiste *${cantidad.toLocaleString()} ${currency}*.`,
-        `🌱 Los susurros en las paredes susurraron secretos que te helaron, perdiste *${cantidad.toLocaleString()} ${currency}*.`
+        `💔 ¡Ehh~! El guardián te atacó sin previo aviso y te hirió gravemente... ¡Qué susto tan horrible!, perdiste *${cantidad.toLocaleString()} ${currency}* 😭`,
+        `🌸 ¡Kyaa~! Las paredes se cerraron de repente y quedaste atrapada sin poder escapar, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡La próxima vez ten más cuidado! 💔`,
+        `💔 ¡Uwaaah~! El suelo se abrió bajo tus pies y cayeron garras afiladas de la nada, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡Qué mazmorra tan traicionera! 😭`,
+        `🌸 ¡Nooo~! Una trampa falsa se activó justo cuando ibas ganando y te lanzó por un acantilado, perdiste *${cantidad.toLocaleString()} ${currency}* 💔`,
+        `💔 ¡Ehh ehh~! El aire se volvió tóxico de repente y comenzaste a ahogarte sin poder hacer nada, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡Cuídate más! 😭`,
+        `🌸 ¡Kyaa~! Un falso tesoro super brillante te engañó completamente y desapareció al tocarlo, perdiste *${cantidad.toLocaleString()} ${currency}* 💔`,
+        `💔 ¡Nooo~! El guardián te encontró y te persiguió por todos los pasillos oscuros sin descanso, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡Tan injusto~! 😭`,
+        `🌸 ¡Uwaaah~! Las runas mágicas se activaron solas y te teletransportaron directo a una jaula, perdiste *${cantidad.toLocaleString()} ${currency}* 💔`,
+        `💔 ¡Kyaa~! Una gárgola enorme te mordió las piernas y te arrastró a las profundidades oscuras, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡Eso debió doler muchísimo~! 😭`,
+        `🌸 ¡Ehh~! El alma del laberinto te absorbió y casi te vuelve loca de tanto miedo, perdiste *${cantidad.toLocaleString()} ${currency}* 💔`,
+        `💔 ¡Nooo~! Un espectro espeluznante te poseyó y comenzó a alimentarse de todo tu miedo, perdiste *${cantidad.toLocaleString()} ${currency}*... ¡Recuperate pronto~! 😭`,
+        `🌸 ¡Kyaa kyaa~! Los susurros en las paredes te contaron secretos tan oscuros que te helaron por completo, perdiste *${cantidad.toLocaleString()} ${currency}* 💔`
       ]
       message = pickRandom(failMessages)
     } else {
       const neutralMessages = [
-        `💙 Exploras ruinas antiguas y aprendes secretos ocultos.`,
-        `🌱 Sigues la pista de un espectro pero desaparece entre la niebla.`,
-        `💙 Acompañas a una princesa por los desiertos de Thaloria sin contratiempos.`,
-        `🌱 Recorres un bosque encantado y descubres nuevas rutas.`,
-        `💙 Visitas una aldea remota y escuchas relatos de viejas batallas.`
+        `✨ Exploras unas ruinas antiguas misteriosas y aprendes secretos ocultos que nadie más conoce... ¡Qué interesante~!`,
+        `🌸 Sigues la pista de un espectro brillante pero desaparece entre la niebla justo cuando lo ibas a alcanzar. ¡Qué frustrante~!`,
+        `✨ Acompañas a una princesa elegante por los desiertos de Thaloria sin ningún contratiempo. ¡Fue un paseo tranquilo~!`,
+        `🌸 Recorres un bosque encantado lleno de luces mágicas y descubres nuevas rutas secretas. ¡Tan bonito~!`,
+        `✨ Visitas una aldea remota encantadora y escuchas relatos emocionantes de viejas batallas épicas. ¡Sugoi~!`
       ]
       message = pickRandom(neutralMessages)
     }
     user.lastdungeon = Date.now() + 20 * 60 * 1000
-    await client.sendMessage(m.chat, { text: `🌱 ${global.miku || 'HATSUNE MIKU'} ${message}` }, { quoted: m })
+    await client.sendMessage(m.chat, { text: `🌸 ${global.miku || 'HATSUNE MIKU'} ${message}` }, { quoted: m })
   },
 }
 
