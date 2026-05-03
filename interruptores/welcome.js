@@ -71,7 +71,7 @@ export default async function welcomeHandler(client) {
           forwardedNewsletterMessageInfo: {
             newsletterJid: botSettings.id || '120363425300401364@newsletter',
             serverMessageId: '0',
-            newsletterName: botSettings.nameid || '🎀 KITAGAWA CHANNEL 🎀'
+            newsletterName: botSettings.nameid || '𝗞𝗜𝗧𝗔𝗚𝗔𝗪𝗔 𝗖𝗛𝗔𝗡𝗘𝗟🌸🌿'
           },
           externalAdReply: {
             title: botSettings.namebot || 'KITAGAWA',
