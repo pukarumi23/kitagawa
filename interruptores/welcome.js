@@ -34,7 +34,6 @@ export default async function welcomeHandler(client) {
       const memberCount = metadata.participants?.length || 0;
       const botId = client.user.id.split(':')[0] + '@s.whatsapp.net';
       const botSettings = global.db.data.settings[botId] || {};
-      const groupCfg = global.db.data.chats?.[anu.id] || {};
       
       for (const jid of participants) {
         
@@ -90,7 +89,7 @@ export default async function welcomeHandler(client) {
         
         if (anu.action === 'add') {
           try {
-            const defaultWelcome = `╭━━━🎀━━━🧵━━━🎀━━━╮
+            const caption = `╭━━━🎀━━━🧵━━━🎀━━━╮
 ┃  🎭 *¡¡ Kyaaa, llegó alguien nuevo !!* 🎭
 ╰━━━🎀━━━🧵━━━🎀━━━╯
 │
@@ -103,14 +102,6 @@ export default async function welcomeHandler(client) {
 │ 🪡 ¡Espero que te la pases genial aquí!
 │ ✨ ¡Siéntete libre como en Akihabara~! 🎌
 ╰━━━🎀━━━🧵━━━🎀━━━╯`;
-
-            const caption = groupCfg.welcomeMsg
-              ? groupCfg.welcomeMsg
-                  .replace(/{usuario}/g,  `@${phone}`)
-                  .replace(/{phone}/g,    phone)
-                  .replace(/{grupo}/g,    metadata.subject || 'Grupo')
-                  .replace(/{miembros}/g, memberCount)
-              : defaultWelcome;
             
             await client.sendMessage(anu.id, { 
               image: { url: pp }, 
